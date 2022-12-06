@@ -1,6 +1,7 @@
+from ctypes import string_at
 import re
 
-with open('input_05.txt', 'r') as f:
+with open('../input_05.txt', 'r') as f:
     lines = [line.rstrip() for line in f]
 
 
@@ -39,7 +40,10 @@ for line in lines:
 for move in moves:
     number_of_stacks, _from, _to = re.findall(r'\d+', move)
     number_of_stacks, _from, _to = int(number_of_stacks), int(_from), int(_to)
+    # Part 1
     stacks[_to] = stacks[_from][:number_of_stacks] + stacks[_to]
+    # Part 2
+    # stacks[_to] = stacks[_from][:number_of_stacks][::-1] + stacks[_to]
     stacks[_from] = stacks[_from][number_of_stacks:]
 
 
