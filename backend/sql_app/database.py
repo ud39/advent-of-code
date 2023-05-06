@@ -1,6 +1,7 @@
-from sqlalchemy import create_engine, text, Integer, String, Column
+from sqlalchemy import create_engine, Integer, String, Column
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from input_read import read_input
 
 
 SQLALCHEMY_DATABASE_URL = "postgresql://jutiboottawong:@localhost/advent_of_code"
@@ -8,7 +9,6 @@ SQLALCHEMY_DATABASE_URL = "postgresql://jutiboottawong:@localhost/advent_of_code
 # TODO after deployment don't forget to remove echo
 engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
 
-Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
 
@@ -28,11 +28,14 @@ class InputData(Base):
 
 Base.metadata.create_all(engine, checkfirst=True)
 
-with open('../../2022/input/input_01.txt', 'r') as f:
-    input_data = f.read()
+input_data = read_input("../../2022/input/input_01.txt")
 
-session = Session()
-data = InputData(data=input_data, year=2022, day=1)
-session.add(data)
-session.commit()
-session.close()
+
+def store_input_data(input: str, year: str, day: str):
+
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    data = InputData(data=input_data, year=year, day=day)
+    session.add(data)
+    session.commit()
+    session.close()

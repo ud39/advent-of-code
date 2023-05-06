@@ -1,4 +1,4 @@
-from input_reading import read_input
+from sql_app.database import store_input_data
 from fastapi import FastAPI
 
 app = FastAPI()
@@ -11,4 +11,4 @@ async def root():
 
 @app.post("/input")
 async def input(path, data_type, day):
-    return read_input()
+    return store_input_data()
