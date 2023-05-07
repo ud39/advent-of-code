@@ -3,7 +3,7 @@ venv
 tsconfig.*
 .vscode
 node_modules
-front-end/.angular/cache
+frontend/.angular/cache
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
