@@ -1,7 +1,6 @@
-from sqlalchemy import create_engine, Integer, String, Column
+from sqlalchemy import create_engine, Integer, String, Column, CheckConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from input_read import read_input
 
 
 SQLALCHEMY_DATABASE_URL = "postgresql://jutiboottawong:@localhost/advent_of_code"
@@ -22,20 +21,19 @@ class InputData(Base):
         self.day = day
 
     data = Column(String, nullable=False)
-    year = Column(Integer, primary_key=True)
-    day = Column(Integer, primary_key=True)
+    year = Column(Integer, CheckConstraint('year > 2000'), primary_key=True)
+    day = Column(Integer, CheckConstraint('day > 0 AND day < 32'), primary_key=True)
 
 
-Base.metadata.create_all(engine, checkfirst=True)
+# Base.metadata.create_all(engine, checkfirst=True)
+Base.metadata.create_all(engine)
 
-input_data = read_input("../../2022/input/input_01.txt")
 
-
-def store_input_data(input: str, year: str, day: str):
+def store_input_data(data: str, year: int, day: int):
 
     Session = sessionmaker(bind=engine)
     session = Session()
-    data = InputData(data=input_data, year=year, day=day)
+    data = InputData(data=data, year=year, day=day)
     session.add(data)
     session.commit()
     session.close()
