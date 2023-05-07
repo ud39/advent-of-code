@@ -1,4 +1,13 @@
+from pydantic import BaseModel
 from fastapi import FastAPI
+from sql_app.database import store_input_data
+
+
+class InputDataRequest(BaseModel):
+    data: str
+    year: int
+    day: int
+
 
 app = FastAPI()
 
@@ -9,5 +18,5 @@ async def root():
 
 
 @app.post("/input")
-async def input(path, data_type, day):
-    return {"message": "Hello World"}
+async def input(input: InputDataRequest):
+    return store_input_data(input.data, input.year, input.day)
