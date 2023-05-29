@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CardComponent } from '../card/card.component';
 
 @Component({
   selector: 'app-home',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  cards: CardComponent[] = []
+
+  ngOnInit(){
+    this.cards = Array(24).fill(0)
+  }
 
 }

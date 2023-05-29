@@ -1,0 +1,8 @@
+<section class="flex flex-col border-8 border-red-100 gap-4 w-80">
+    <p>
+    {{year}}
+    </p>
+    <ol class="flex justify-evenly border-2 border-red-300">
+        <li *ngFor='let solution of solutions'>{{solution}}</li>
+    </ol>
+</section>
