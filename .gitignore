@@ -54,3 +54,5 @@ Thumbs.db
 *.py[cod]
 *.pyc
 *.pyc
+
+.env
