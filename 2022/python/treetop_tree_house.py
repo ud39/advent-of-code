@@ -63,4 +63,50 @@ def getNumberOfVisibleTreesBruteForce(matrix):
     return visibleTrees
 
 
-print(getNumberOfVisibleTreesBruteForce(create_matrix(rows, columns)))
+def getMostScenicPosition(matrix):
+
+    mostScenic = 0
+
+    for i in range(1, len(matrix)-1):
+        for j in range(1, len(matrix[0])-1):
+            currentScenic = [0] * 4
+
+            for row in range(i-1, -1, -1):
+                if matrix[row][j] >= matrix[i][j]:
+                    currentScenic[0] += 1
+                    break
+                else:
+                    currentScenic[0] += 1
+
+            for row in range(i+1, len(matrix)):
+                if matrix[row][j] >= matrix[i][j]:
+                    currentScenic[1] += 1
+                    break
+                else:
+                    currentScenic[1] += 1
+
+            for column in range(j-1, -1, -1):
+                if matrix[i][column] >= matrix[i][j]:
+                    currentScenic[2] += 1
+                    break
+                else:
+                    currentScenic[2] += 1
+
+            for column in range(j+1, len(matrix)):
+                if matrix[i][column] >= matrix[i][j]:
+                    currentScenic[3] += 1
+                    break
+                else:
+                    currentScenic[3] += 1
+
+            total = 1
+            for direction in currentScenic:
+                total *= direction
+
+            if total > mostScenic:
+                mostScenic = total
+
+    return mostScenic
+
+
+print(getMostScenicPosition(create_matrix(rows, columns)))
