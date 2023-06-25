@@ -1,6 +1,5 @@
-import struct
 from pydantic import BaseModel
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, Form
 from sql_app.database import store_input_data, store_language, store_solution
 
 
@@ -8,11 +7,6 @@ class InputDataRequest(BaseModel):
     data: str
     year: int
     day: int
-
-
-class LanguageDataRequest(BaseModel):
-    language: str
-    logo: bytes
 
 
 class SolutionDataRequest(BaseModel):
@@ -36,9 +30,12 @@ async def inputData(input: InputDataRequest):
 
 
 @app.post("/language")
-async def inputLanguage(input: LanguageDataRequest):
-    binary_data = struct.pack('>Q', 121312312313123)
-    return store_language(LanguageDataRequest.language, LanguageDataRequest.logo)
+async def inputLanguage(lang: str = Form(...), file: UploadFile = UploadFile(...)):
+
+    file_data = await file.read()
+    file_string = file_data.decode("utf-8")
+    store_language(lang, file_string)
+    return {"message": "Language data received", "language": lang, "logo": file.filename}
 
 
 @app.post("/solution")

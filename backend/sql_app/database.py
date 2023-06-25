@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Integer, String, Column, CheckConstraint, ForeignKey, LargeBinary
+from sqlalchemy import create_engine, Integer, String, Column, CheckConstraint, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, mapped_column, relationship
 
@@ -24,8 +24,8 @@ class Language(Base):
 
     id = mapped_column(Integer, primary_key=True)
     solution = relationship("Solution", back_populates="language")
-    language = Column(String, nullable=False)
-    logo = Column(LargeBinary, nullable=False)
+    language = Column(String, nullable=False, unique=True)
+    logo = Column(String, nullable=False)
 
 
 class Solution(Base):
@@ -38,7 +38,7 @@ class Solution(Base):
     day = Column(Integer, CheckConstraint('day > 0 AND day < 26'), primary_key=True)
 
 
-# Base.metadata.create_all(engine, checkfirst=True)
+#Base.metadata.create_all(engine, checkfirst=True)
 Base.metadata.create_all(engine)
 
 
@@ -52,7 +52,7 @@ def store_input_data(data: str, year: int, day: int):
     session.close()
 
 
-def store_language(language: str, logo: bytes):
+def store_language(language: str, logo: str):
 
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -65,7 +65,7 @@ def store_language(language: str, logo: bytes):
 def store_solution(solution: str, language: str, year: int, day: int):
 
     Session = sessionmaker(bind=engine)
-    languageID = getLanguageID(language)
+    languageID = get_language_ID(language)
     session = Session()
     data = Solution(solution=solution, languageId=languageID, year=year, day=day)
     session.add(data)
@@ -73,6 +73,6 @@ def store_solution(solution: str, language: str, year: int, day: int):
     session.close()
 
 
-def getLanguageID(language: str) -> int:
+def get_language_ID(language: str) -> int:
     pass
     # TODO: select language and get id
