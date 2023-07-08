@@ -1,8 +1,38 @@
 version: "3.9"
 services:
+
   frontend:
     container_name: frontend
     build: ./frontend
-    volumes: .:/code
+    volumes:
+      - .:/code
     ports:
       - "4200:80"
+    networks:
+      - advent_of_code
+
+  backend:
+    container_name: backend
+    build: ./backend
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    networks:
+      - advent_of_code
+
+  database:
+    container_name: postgres
+    image: postgres:15-alpine
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: "mrRobot"
+      POSTGRES_DB: "advent_of_code"
+      POSTGRES_PASSWORD: "1337"
+    networks:
+      - advent_of_code
+
+networks:
+  advent_of_code:

@@ -3,7 +3,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, mapped_column, relationship
 
 
-SQLALCHEMY_DATABASE_URL = "postgresql://jutiboottawong:@localhost/advent_of_code"
+# SQLALCHEMY_DATABASE_URL = "postgresql://jutiboottawong:@localhost/advent_of_code"
+SQLALCHEMY_DATABASE_URL = "postgresql://mrRobot:1337@database:5432/advent_of_code"
+
 
 # TODO after deployment don't forget to remove echo
 engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
