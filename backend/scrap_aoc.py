@@ -4,6 +4,12 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
 
+def saveInput(filename: str, input: str):
+
+    with open(filename, 'w') as f:
+        f.write(input)
+
+
 def get_data(year: int, day: int) -> object:
 
     load_dotenv()
@@ -14,7 +20,7 @@ def get_data(year: int, day: int) -> object:
     cookie = {'name': cookie_name, 'value': cookie_value}
     session.cookies.set(**cookie)
 
-    url = 'https://adventofcode.com/' + str(year) + '/day/' + str(day) + '/input'
+    url = 'https://adventofcode.com/' + str(year) + '/day/' + str(day)
     adventDay = {}
 
     resp = session.get(url=url)
@@ -27,12 +33,20 @@ def get_data(year: int, day: int) -> object:
     title = soup.find('h2')
     example = soup.find('code')
 
-    adventDay['day'] = day
-    adventDay['example'] = example
-    adventDay['title'] = title
-    adventDay['year'] = year
+    url_input = 'https://adventofcode.com/' + str(year) + '/day/' + str(day) + '/input'
+    resp = session.get(url=url_input)
+    html_content = resp.content
 
-    print(soup)
+    soup = BeautifulSoup(html_content, 'html.parser')
+
+    adventDay['day'] = day
+    adventDay['example'] = example.text
+    adventDay['title'] = title.text
+    adventDay['year'] = year
+    adventDay['input'] = soup.text
+
+    saveInput('Hello.txt', adventDay['input'])
+
     return adventDay
 
 
