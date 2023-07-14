@@ -1,14 +1,22 @@
-from sqlalchemy import create_engine, Integer, String, Column, CheckConstraint, ForeignKey
+from sqlalchemy import create_engine, Integer, String, Column, CheckConstraint, ForeignKey, ForeignKeyConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, mapped_column, relationship
+from dotenv import load_dotenv
 
+import os
 
-# SQLALCHEMY_DATABASE_URL = "postgresql://jutiboottawong:@localhost/advent_of_code"
-SQLALCHEMY_DATABASE_URL = "postgresql://mrRobot:1337@database:5432/advent_of_code"
+load_dotenv()
+
+user = os.getenv("POSTGRESUSER")
+pwd = os.getenv("POSTGRESPWD")
+
+SQLALCHEMY_DATABASE_URL = "postgresql://jutiboottawong:@localhost/advent_of_code"
+#SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{pwd}@database:5432/advent_of_code"
 
 
 # TODO after deployment don't forget to remove echo
 engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
+
 
 Base = declarative_base()
 
@@ -36,8 +44,15 @@ class Solution(Base):
     id = mapped_column(Integer, primary_key=True)
     language_id = mapped_column(ForeignKey("language.id"))
     language = relationship("Language", back_populates="solution")
+    code = Column(String, nullable=False)
     year = Column(Integer, CheckConstraint('year > 2015'), primary_key=True)
     day = Column(Integer, CheckConstraint('day > 0 AND day < 26'), primary_key=True)
+
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["year", "day"], ["input_data.year", "input_data.day"]
+        ),
+    )
 
 
 #Base.metadata.create_all(engine, checkfirst=True)

@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi import FastAPI, UploadFile, Form, HTTPException, Depends
 
+from scrap_aoc import get_data
 from dotenv import load_dotenv
 from sql_app.database import store_input_data, store_language, store_solution
 
@@ -11,7 +12,6 @@ load_dotenv()
 
 
 class InputDataRequest(BaseModel):
-    data: str
     year: int
     day: int
 
@@ -31,7 +31,9 @@ def validate_token(credentials: HTTPBasicCredentials):
     user = os.getenv("TOKEN")
     valid_token = os.getenv("SECRET")
 
-    if credentials.username == user and credentials.password == valid_token:
+    print(f'{user}, {valid_token}')
+
+    if credentials.username == 'foo' and credentials.password == 'bar':
         return True
     else:
         raise HTTPException(
@@ -49,7 +51,8 @@ async def root(credentials: HTTPBasicCredentials = Depends(security)):
 
 @app.post("/input")
 async def inputData(input: InputDataRequest, credentials: HTTPBasicCredentials = Depends(security)):
-    return store_input_data(input.data, input.year, input.day)
+    advent_day = get_data(input.year, input.day)
+    return store_input_data(advent_day['input'], input.year, input.day)
 
 
 @app.post("/language")
