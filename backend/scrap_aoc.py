@@ -4,12 +4,6 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
 
-def saveInput(filename: str, input: str):
-
-    with open(filename, 'w') as f:
-        f.write(input)
-
-
 def get_data(year: int, day: int) -> object:
 
     load_dotenv()
@@ -45,9 +39,4 @@ def get_data(year: int, day: int) -> object:
     adventDay['year'] = year
     adventDay['input'] = soup.text
 
-    saveInput('Hello.txt', adventDay['input'])
-
     return adventDay
-
-
-get_data(2022, 1)
