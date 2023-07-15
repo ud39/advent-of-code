@@ -1,6 +1,7 @@
 from pydantic import BaseModel
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi import FastAPI, UploadFile, Form, HTTPException, Depends
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi.middleware.cors import CORSMiddleware
 
 from scrap_aoc import get_data
 from dotenv import load_dotenv
@@ -25,6 +26,21 @@ class SolutionDataRequest(BaseModel):
 
 app = FastAPI()
 security = HTTPBasic()
+
+origins = [
+    "http://localhost:4200",
+    "http://localhost"
+]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Adjust the allowed origin(s) as needed
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 
 def validate_token(credentials: HTTPBasicCredentials):
