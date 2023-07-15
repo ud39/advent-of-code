@@ -1,14 +1,17 @@
-from sqlalchemy import create_engine, Integer, String, Column, CheckConstraint, ForeignKey, ForeignKeyConstraint
+from sqlalchemy import create_engine, Integer, String, Column, CheckConstraint, ForeignKey, ForeignKeyConstraint, select, text
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, mapped_column, relationship
+from sqlalchemy.orm import sessionmaker, mapped_column, relationship, Session
+from fastapi.encoders import jsonable_encoder
 from dotenv import load_dotenv
 
 import os
+import datetime
 
 load_dotenv()
 
 user = os.getenv("POSTGRESUSER")
 pwd = os.getenv("POSTGRESPWD")
+current_year = datetime.datetime.now().year
 
 SQLALCHEMY_DATABASE_URL = "postgresql://jutiboottawong:@localhost/advent_of_code"
 #SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{pwd}@database:5432/advent_of_code"
@@ -57,39 +60,62 @@ class Solution(Base):
 
 #Base.metadata.create_all(engine, checkfirst=True)
 Base.metadata.create_all(engine)
+Session: Session = sessionmaker(bind=engine)
 
 
 def store_input_data(data: str, year: int, day: int):
-
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    data = InputData(data=data, year=year, day=day)
-    session.add(data)
-    session.commit()
-    session.close()
+    with Session() as session:  # type: Session
+        data = InputData(data=data, year=year, day=day)
+        session.add(data)
+        session.commit()
 
 
 def store_language(language: str, logo: str):
 
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    data = Language(language=language, logo=logo)
-    session.add(data)
-    session.commit()
-    session.close()
+    with Session() as session:
+        data = Language(language=language, logo=logo)
+        session.add(data)
+        session.commit()
+        session.close()
 
 
 def store_solution(solution: str, language: str, year: int, day: int):
 
-    Session = sessionmaker(bind=engine)
-    languageID = get_language_ID(language)
-    session = Session()
-    data = Solution(solution=solution, languageId=languageID, year=year, day=day)
-    session.add(data)
-    session.commit()
-    session.close()
+    with Session() as session:
+        languageID = session.execute(select(Language).where(Language.language == language))
+        data = Solution(solution=solution, languageID=languageID, year=year, day=day)
+        session.add(data)
+        session.commit()
+        session.close()
 
 
-def get_language_ID(language: str) -> int:
-    pass
-    # TODO: select language and get id
+def get_solutions(year: int):
+    with Session() as session:
+        solutions = session.query(Solution).filter(Solution.year == year).all()
+        return solutions
+
+
+def get_solutions_language(year: int):
+    with Session() as session:
+        query_result = (
+            session.query(Solution, Language)
+            .filter(Solution.year == year)
+            .join(Language)
+            .all()
+        )
+        solutions = []
+        for solution, language in query_result:
+            solution_data = {
+                "solution_id": solution.id,
+                "language_id": solution.language_id,
+                "code": solution.code,
+                "year": solution.year,
+                "day": solution.day,
+                "language": {
+                    "language_id": language.id,
+                    "language": language.language,
+                    "logo": language.logo,
+                },
+            }
+            solutions.append(solution_data)
+        return solutions

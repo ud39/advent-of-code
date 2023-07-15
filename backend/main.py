@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from scrap_aoc import get_data
 from dotenv import load_dotenv
-from sql_app.database import store_input_data, store_language, store_solution
+from sql_app.database import store_input_data, store_language, store_solution, get_solutions, get_solutions_language
 
 import os
 
@@ -83,3 +83,8 @@ async def inputLanguage(lang: str = Form(...), file: UploadFile = UploadFile(...
 @app.post("/solution")
 async def inputSolution(input: SolutionDataRequest, credentials: HTTPBasicCredentials = Depends(security)):
     return store_solution(SolutionDataRequest.solution, SolutionDataRequest.language, SolutionDataRequest.year, SolutionDataRequest.day)
+
+
+@app.get("/solutions/")
+async def getSolution(year: int = 2023):
+    return get_solutions_language(year)
