@@ -87,4 +87,9 @@ async def inputSolution(input: SolutionDataRequest, credentials: HTTPBasicCreden
 
 @app.get("/solutions/")
 async def getSolution(year: int = 2023):
+    return get_solutions(year)
+
+
+@app.get("/solutions_logos/")
+async def getSolutionLogo(year: int = 2023):
     return get_solutions_language(year)

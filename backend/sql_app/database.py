@@ -91,31 +91,37 @@ def store_solution(solution: str, language: str, year: int, day: int):
 
 def get_solutions(year: int):
     with Session() as session:
-        solutions = session.query(Solution).filter(Solution.year == year).all()
+        results = session.query(Solution).filter(Solution.year == year).all()
+        solutions = [row for row in results]
         return solutions
 
 
 def get_solutions_language(year: int):
     with Session() as session:
         query_result = (
-            session.query(Solution, Language)
+            session.query(Language)
+            .join(Solution)
             .filter(Solution.year == year)
-            .join(Language)
+            .distinct(Language.id)
             .all()
         )
-        solutions = []
-        for solution, language in query_result:
-            solution_data = {
-                "solution_id": solution.id,
-                "language_id": solution.language_id,
-                "code": solution.code,
-                "year": solution.year,
-                "day": solution.day,
-                "language": {
-                    "language_id": language.id,
+        languages = []
+        for language in query_result:
+            language_data = {
+                language.id: {
                     "language": language.language,
                     "logo": language.logo,
-                },
+                }
             }
-            solutions.append(solution_data)
-        return solutions
+            languages.append(language_data)
+        return languages
+
+
+def get_Inputs(year: int):
+    with Session() as sesssion:
+        results = (
+            sesssion.query(InputData)
+            .filter(InputData.year == year).all()
+        )
+        inputs = [row for row in results]
+        return inputs
