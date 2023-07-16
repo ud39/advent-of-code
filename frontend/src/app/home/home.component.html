@@ -2,7 +2,7 @@
     <header class="w-full">
         <h2 class="m-auto block w-fit">20xx</h2>
     </header>
-    <section class="" *ngFor="let card of cards">
-        <app-card />
+    <section class="" *ngFor="let day of cards">
+        <app-card [day]="day"/>
     </section>
 </main>

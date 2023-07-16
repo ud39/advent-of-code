@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { CardComponent } from '../card/card.component';
-import { Language, Solution, InputData } from '../interfaces/interface';
+import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { Solution} from '../interfaces/interface';
+import { NumericRange } from '../types';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,32 +11,39 @@ import { Language, Solution, InputData } from '../interfaces/interface';
 })
 
 
+
 export class HomeComponent implements OnInit {
 
-  cards: CardComponent[] = []
-
+  cards: number[] = []
+  year: NumericRange<2015, typeof recentYear> = recentYear
 
   constructor (private http : HttpClient) {}
 
   ngOnInit(): void{
-    this.getNumberOfSolutions()
+    const solutions = this.getNumberOfSolutions(this.year)
+    const numberOfSolutions: Set<number> = new Set() 
 
-  }
-
-  getNumberOfSolutions(): void {
-
-    const credentials = btoa('foo:bar')
-    const headers = new HttpHeaders().set('Authorization', `Basic ${credentials}`)
-
-    this.http.get<Solution[]>('http://localhost:8000/', {headers})
-      .subscribe({
-      next: resp => {
-        console.log(resp);
+    solutions.subscribe({
+      next: (resp: Solution[]) => {
+        Array.from(resp).forEach( solution => {
+          numberOfSolutions.add(solution.day)
+        })
+        this.cards = Array.from(numberOfSolutions).sort((a, b) => a - b);
       },
-      error: err => {
-        console.log(err);
+      error: (err: any) => {
+        console.log(err)
       }
     })
   }
+
+  getNumberOfSolutions(year: number): Observable<Solution[]> {
+
+    const credentials = btoa('foo:bar')
+    const headers = new HttpHeaders().set('Authorization', `Basic ${credentials}`)
+    const params = new HttpParams().set('year', year)
+
+    return this.http.get<Solution[]>(`http://localhost:8000/solutions`, {headers, params})
+  }
 }
 
+const recentYear: number = new Date().getFullYear() - 2
