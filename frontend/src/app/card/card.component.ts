@@ -1,5 +1,6 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { NumericRange } from '../types'
+import { Language } from '../interfaces/interface';
 
 @Component({
   selector: 'app-card',
@@ -10,6 +11,9 @@ import { NumericRange } from '../types'
 
 export class CardComponent implements OnInit{
   @Input() day: number = 0;
+  @Input() recentYear: number = 0;
+  @Input() languages: Language[] = []
+  @Input() logos: string[] = []
 
   adventDay: NumericRange<1, 24>[] = []
   year: number = 0
@@ -18,9 +22,14 @@ export class CardComponent implements OnInit{
   constructor() {}
 
   ngOnInit(): void {
-    const currentDate = new Date()
-    this.year = currentDate.getFullYear()
+    this.year = this.recentYear
     this.solutions = []
+    this.logos = this.logos.map( logo => svgSize(logo, 24))
   }
+}
+
+function svgSize(svg: string, size: number) {
+  svg = svg.replace(/width="\d+px"|height="\d+px"/g, `width="${size}px" height="${size}px"`);
+  return svg;
 }
 

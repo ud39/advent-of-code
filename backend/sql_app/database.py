@@ -108,10 +108,9 @@ def get_solutions_language(year: int):
         languages = []
         for language in query_result:
             language_data = {
-                language.id: {
-                    "language": language.language,
-                    "logo": language.logo,
-                }
+                "id": language.id,
+                "language": language.language,
+                "logo": language.logo
             }
             languages.append(language_data)
         return languages

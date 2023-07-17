@@ -1,7 +1,7 @@
 
 interface Language {
 
-  id: number
+  id: number,
   language: string,
   logo: string
 }
