@@ -68,7 +68,7 @@ async def root(credentials: HTTPBasicCredentials = Depends(security)):
 @app.post("/input")
 async def inputData(input: InputDataRequest, credentials: HTTPBasicCredentials = Depends(security)):
     advent_day = get_data(input.year, input.day)
-    return store_input_data(advent_day['input'], input.year, input.day)
+    return store_input_data(advent_day['input'], advent_day['title'], input.year, input.day)
 
 
 @app.post("/language")

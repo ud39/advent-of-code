@@ -28,6 +28,7 @@ class InputData(Base):
     __tablename__ = 'input_data'
 
     data = Column(String, nullable=False)
+    title = Column(String, nullable=False)
     year = Column(Integer, CheckConstraint('year > 2015'), primary_key=True)
     day = Column(Integer, CheckConstraint('day > 0 AND day < 26'), primary_key=True)
 
@@ -63,9 +64,9 @@ Base.metadata.create_all(engine)
 Session: Session = sessionmaker(bind=engine)
 
 
-def store_input_data(data: str, year: int, day: int):
+def store_input_data(data: str, title: str, year: int, day: int):
     with Session() as session:  # type: Session
-        data = InputData(data=data, year=year, day=day)
+        data = InputData(data=data, title=title, year=year, day=day)
         session.add(data)
         session.commit()
 
