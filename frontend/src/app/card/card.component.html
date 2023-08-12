@@ -1,13 +1,16 @@
-<section class="flex flex-col border-8 border-red-100 gap-4 w-80">
+<section class="flex flex-col border-8 border-red-100 gap-4 w-80 h-full">
   <p class="justify-start w-full flex ms-3">{{ year }} {{ day }}</p>
   <h2 class="font-bold"></h2>
   <hr />
 
-  <code class="self-center" [class]="cardContents[0].language">
-    {{ cardContents[0].code }}
+  <code class="self-center basis-full" [class]="selectedLanguage.language">
+
+    {{ selectedLanguage.code }}
+
+
   </code>
   <ol class="flex justify-evenly border-2 border-red-300">
-    <li *ngFor="let logo of logos" class="inline-block">
+      <li *ngFor="let logo of logos; let i = index" [attr.id]="'language-' + i" class="inline-block cursor-pointer" (click)="changeSolution($event)">
       <svg [innerHTML]="logo | safeHtml" width="24" height="24"></svg>
     </li>
   </ol>

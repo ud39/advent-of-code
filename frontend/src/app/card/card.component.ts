@@ -16,6 +16,8 @@ export class CardComponent implements OnInit{
   @Input() logos: string[] = []
   @Input() cardContents: Array<CardContent> = []
 
+  selectedLanguage: Partial<CardContent> = {}
+
   adventDay: NumericRange<1, 24>[] = []
   year: number = 0
   solutions: String[] = []
@@ -26,6 +28,19 @@ export class CardComponent implements OnInit{
     this.year = this.recentYear
     this.solutions = []
     this.logos = this.logos.map(logo => svgSize(logo, 24))
+    this.selectedLanguage = this.cardContents[0]
+
+  }
+
+  changeSolution(event: Event) {
+    const clickedSolution = event.currentTarget as HTMLElement
+    const clickedSolutionID = clickedSolution.getAttribute('id')?.split('-')[1]
+
+    if (clickedSolutionID) {
+      this.selectedLanguage = this.cardContents[Number(clickedSolutionID)]
+    }
+
+
   }
 }
 
