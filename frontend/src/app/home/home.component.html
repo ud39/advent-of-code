@@ -1,8 +1,16 @@
 <main class="flex justify-center flex-wrap">
-    <header class="w-full">
-        <h2 class="m-auto block w-fit">{{recentYear}}</h2>
-    </header>
-    <section class="" *ngFor="let day of cards">
-        <app-card [day]="day" [recentYear]="recentYear" [languages]="languages" [logos]="logos"/>
-    </section>
+  <header class="w-full">
+    <h2 class="m-auto block w-fit">{{ recentYear }}</h2>
+  </header>
+  <section class="" *ngFor="let day of cards">
+    <ng-container *ngIf="cardContents[day]">
+      <app-card
+        [day]="day"
+        [recentYear]="recentYear"
+        [languages]="languages"
+        [logos]="avaiableSolutions[day]"
+        [cardContents]="cardContents[day]"
+      />
+    </ng-container>
+  </section>
 </main>

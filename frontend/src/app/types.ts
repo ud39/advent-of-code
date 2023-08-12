@@ -8,4 +8,9 @@ type NumericRange<
     ? ACC | START | END
     : NumericRange<START, END, [...ARR, 1], ARR[START] extends undefined ? ACC : ACC | ARR['length']>
 
-export { NumericRange }
+
+type CardContent = { code: string, language: string, language_id: number};
+type CardContents = {[day: number]: Array<CardContent> }
+type AvailableSolutions = {[day: number]: string[]} 
+
+export { NumericRange, CardContents, CardContent, AvailableSolutions}

@@ -1,11 +1,14 @@
 <section class="flex flex-col border-8 border-red-100 gap-4 w-80">
-    <p>
-        {{ year }} {{ day }}
-    </p>
-    <ol class="flex justify-evenly border-2 border-red-300">
-        <li *ngFor='let logo of logos' class="inline-block">
-            <svg [innerHTML]="logo | safeHtml" width="24" height="24"></svg>
-        </li>
-    </ol>
-</section>
+  <p class="justify-start w-full flex ms-3">{{ year }} {{ day }}</p>
+  <h2 class="font-bold"></h2>
+  <hr />
 
+  <code class="self-center" [class]="cardContents[0].language">
+    {{ cardContents[0].code }}
+  </code>
+  <ol class="flex justify-evenly border-2 border-red-300">
+    <li *ngFor="let logo of logos" class="inline-block">
+      <svg [innerHTML]="logo | safeHtml" width="24" height="24"></svg>
+    </li>
+  </ol>
+</section>
