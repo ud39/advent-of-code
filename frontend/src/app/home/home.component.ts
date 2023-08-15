@@ -11,7 +11,7 @@ import { Observable, forkJoin } from "rxjs";
 })
 export class HomeComponent implements OnInit {
   cards: number[] = [];
-  languages: Language[] = [];
+  languages: string[] = [];
   year: NumericRange<2015, typeof recentYear> = recentYear;
   recentYear: number = recentYear;
   cardContents: CardContents = {};

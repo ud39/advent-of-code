@@ -1,6 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { NumericRange, CardContent } from '../types'
-import { Language } from '../interfaces/interface';
 
 @Component({
   selector: 'app-card',
@@ -12,7 +11,7 @@ import { Language } from '../interfaces/interface';
 export class CardComponent implements OnInit{
   @Input() day: number = 0;
   @Input() recentYear: number = 0;
-  @Input() languages: Language[] = []
+  @Input() languages: string[] = []
   @Input() logos: string[] = []
   @Input() cardContents: Array<CardContent> = []
 
@@ -29,6 +28,8 @@ export class CardComponent implements OnInit{
     this.solutions = []
     this.logos = this.logos.map(logo => svgSize(logo, 24))
     this.selectedLanguage = this.cardContents[0]
+    //TODO: Solve issue of why single languages doesn't highlight correctly
+    this.languages = ['python', 'javascript', 'typescript', 'c']
 
   }
 

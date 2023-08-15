@@ -35,9 +35,12 @@ import {
         lineNumbers: true,
         coreLibraryLoader: () => import('highlight.js/lib/core'),
         lineNumbersLoader: () => import('ngx-highlightjs/line-numbers'),
-        themePath: 'node_modules/highlight.js/styles/github.css',
         languages: {
           typescript: () => import('highlight.js/lib/languages/typescript'),
+          javascript: () => import('highlight.js/lib/languages/javascript'),
+          c: () => import('highlight.js/lib/languages/c'),
+          cpp: () => import('highlight.js/lib/languages/cpp'),
+          python: () => import('highlight.js/lib/languages/python'),
           css: () => import('highlight.js/lib/languages/css'),
           xml: () => import('highlight.js/lib/languages/xml'),
         },
