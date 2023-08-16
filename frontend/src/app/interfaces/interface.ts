@@ -21,7 +21,8 @@ interface InputData {
 
   data: string,
   year: number,
-  day: number
+  day: number,
+  title: string
 }
 
 export {Language, Solution, InputData}

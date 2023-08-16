@@ -1,8 +1,6 @@
 <section class="flex flex-col border-8 border-red-100 gap-4 w-80 h-full">
-  <p class="justify-start w-full flex ms-3">{{ year }} {{ day }}</p>
-  <h2 class="font-bold"></h2>
+    <h2 class="justify-center w-full flex ms-3 font-bold">{{ title }} </h2>
   <hr />
-
   <app-code [code]='selectedLanguage.code || "" ' [languages]=languages [lineNumbers]=true/>
 
   <ol class="flex justify-evenly border-2 border-red-300">

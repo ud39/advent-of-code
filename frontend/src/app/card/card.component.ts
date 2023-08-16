@@ -14,9 +14,9 @@ export class CardComponent implements OnInit{
   @Input() languages: string[] = []
   @Input() logos: string[] = []
   @Input() cardContents: Array<CardContent> = []
+  @Input() title: string = ''
 
   selectedLanguage: Partial<CardContent> = {}
-
   adventDay: NumericRange<1, 24>[] = []
   year: number = 0
   solutions: String[] = []

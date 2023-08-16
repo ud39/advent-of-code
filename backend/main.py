@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from scrap_aoc import get_data
 from dotenv import load_dotenv
-from sql_app.database import store_input_data, store_language, store_solution, get_solutions, get_solutions_language
+from sql_app.database import store_input_data, store_language, store_solution, get_solutions, get_solutions_language, get_Inputs
 
 import os
 
@@ -93,3 +93,8 @@ async def getSolution(year: int = 2023):
 @app.get("/solutions_logos/")
 async def getSolutionLogo(year: int = 2023):
     return get_solutions_language(year)
+
+
+@app.get("/inputs/")
+async def getInputs(year: int = 2023):
+    return get_Inputs(year)

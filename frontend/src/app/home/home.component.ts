@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { Language, Solution } from "../interfaces/interface";
+import { Language, Solution, InputData} from "../interfaces/interface";
 import { NumericRange, CardContents, AvailableSolutions} from "../types";
 import { Observable, forkJoin } from "rxjs";
 
@@ -16,16 +16,25 @@ export class HomeComponent implements OnInit {
   recentYear: number = recentYear;
   cardContents: CardContents = {};
   avaiableSolutions: AvailableSolutions = {}
+  inputData: {[day: number]: string} = {}
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
 
     this.getNumberOfSolutions().subscribe({
-      next: ([languages, solutions]) => {
+      next: ([languages, solutions, inputs]) => {
         this.cards = Array.from(
           new Set(solutions.map((solution) => solution.day)),
         ).sort((a, b) => a - b);
+
+        this.inputData = {} 
+        inputs
+         .map( input => ({[input.day]: input.title.split('---')[1]}))
+         .forEach( obj => {
+           const key = Object.keys(obj)[0]
+           this.inputData[Number(key)] = Object.values(obj)[0]
+         })
 
         solutions.sort((a, b) => a.language_id - b.language_id)
 
@@ -34,7 +43,7 @@ export class HomeComponent implements OnInit {
             if (id === language_id) {
               let cardContent: CardContents[number] extends Array<infer U>
                 ? U
-                : never = { code: code , language: language, language_id};
+                : never = { code: code , language: language, language_id }
               if (this.cardContents[day] === undefined) {
                 this.cardContents[day] = [cardContent];
                 this.avaiableSolutions[day] = [logo]
@@ -52,9 +61,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  getNumberOfSolutions(
-    year: number = recentYear,
-  ): Observable<[Language[], Solution[]]> {
+  getNumberOfSolutions(year: number = recentYear,): Observable<[Language[], Solution[], InputData[]]> {
     const credentials = btoa("foo:bar");
     const headers = new HttpHeaders().set(
       "Authorization",
@@ -71,7 +78,12 @@ export class HomeComponent implements OnInit {
       { headers, params },
     );
 
-    return forkJoin([languages, solutions]);
+    const inputData = this.http.get<InputData[]>(
+      `http://localhost:8000/inputs`,
+      { headers, params },
+    );
+
+    return forkJoin([languages, solutions, inputData]);
   }
 }
 

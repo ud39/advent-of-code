@@ -93,6 +93,7 @@ def store_solution(solution: str, language: str, year: int, day: int):
 def get_solutions(year: int):
     with Session() as session:
         results = session.query(Solution).filter(Solution.year == year).all()
+        #solutions = [{"title": title, **solution.__dict__} for solution, title in results]
         solutions = [row for row in results]
         return solutions
 
