@@ -1,6 +1,6 @@
 
 with open('input_09.txt', 'r') as f:
-    lines = [line.strip() for line in f]
+    path = [line.strip() for line in f]
 
 
 def sign(x):
@@ -48,7 +48,9 @@ class Knot(HeadKnot):
             new_x = self.x + sign(dx)
             new_y = self.y + sign(dy)
             self.visited_place.add((new_x, new_y))
-            return Knot(new_x, new_y, self.visited_place)
+            self.x = new_x
+            self.y = new_y
+            return
         else:
             return self
 
@@ -58,17 +60,28 @@ class Knot(HeadKnot):
 
 
 head = HeadKnot(0, 0)
-knot = Knot(0, 0, set())
+knot_list = [Knot(0, 0, set()) for _ in range(0, 9)]
 
 
-for move in lines:
+def rope_bridge(path: str, head: HeadKnot, knot_list: Knot):
 
-    move = move.split()
-    direction = move[0]
-    amount_of_move = int(move[1])
+    for move in path:
 
-    for i in range(0, amount_of_move):
-        knot = knot.follow_head(head.move(direction))
+        move = move.split()
+        direction = move[0]
+        amount_of_move = int(move[1])
+
+        for _ in range(0, amount_of_move):
+
+            head = head.move(direction)
+
+            for i in range(len(knot_list)):
+                if i == 0:
+                    knot_list[i].follow_head(head)
+                else:
+                    knot_list[i].follow_head(knot_list[i-1])
+
+    print(knot_list[len(knot_list)-1].amount_of_visited_place())
 
 
-print(knot.amount_of_visited_place())
+rope_bridge(path, head, knot_list)
