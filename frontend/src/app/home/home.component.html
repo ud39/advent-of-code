@@ -2,16 +2,19 @@
   <header class="w-full">
     <h2 class="m-auto block w-fit">{{ recentYear }}</h2>
   </header>
-  <section class="" *ngFor="let day of cards">
-    <ng-container *ngIf="cardContents[day]">
-      <app-card
-        [day]="day"
-        [recentYear]="recentYear"
-        [languages]="languages"
-        [logos]="avaiableSolutions[day]"
-        [title]="inputData[day]"
-        [cardContents]="cardContents[day]"
-      />
-    </ng-container>
-  </section>
+
+  <ng-container *ngIf="!isLoading; else loadingBlock">
+    <section class="" *ngFor="let day of cards">
+      <ng-container *ngIf="cardContents[day].length > 0 && cardContents[day][0] !== undefined; else elseBlock">
+        <app-card [day]="day" [recentYear]="recentYear" [languages]="languages" [logos]="avaiableSolutions[day]"
+          [title]="inputData[day]" [cardContents]="cardContents[day]" />
+      </ng-container>
+      <ng-template #elseBlock>
+        <app-placeholder />
+      </ng-template>
+    </section>
+  </ng-container>
+  <ng-template #loadingBlock>
+    <app-placeholder />
+  </ng-template>
 </main>
