@@ -1,10 +1,11 @@
 <section class="flex flex-col border-8 border-red-100 gap-4 w-80 h-full">
-    <h2 class="justify-center w-full flex ms-3 font-bold">{{ title }} </h2>
+  <h2 class="justify-center w-full flex ms-3 font-bold">{{ title }} </h2>
   <hr />
-  <app-code [code]='selectedLanguage.code || "" ' [languages]=languages [lineNumbers]=true/>
+  <app-code [code]='selectedLanguage?.code || "" ' [languages]=languages [lineNumbers]=true />
 
   <ol class="flex justify-evenly border-2 border-red-300">
-      <li *ngFor="let logo of logos; let i = index" [attr.id]="'language-' + i" class="inline-block cursor-pointer" (click)="changeSolution($event)">
+    <li *ngFor="let logo of logos; let i = index" [attr.id]="'language-' + i" class="inline-block cursor-pointer"
+      (click)="changeSolution($event)">
       <svg [innerHTML]="logo | safeHtml" width="24" height="24"></svg>
     </li>
   </ol>
