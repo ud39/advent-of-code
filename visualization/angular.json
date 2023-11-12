@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "my-lib": {
+    "visual-aoc": {
       "projectType": "library",
-      "root": "projects/my-lib",
-      "sourceRoot": "projects/my-lib/src",
+      "root": "projects/visual-aoc",
+      "sourceRoot": "projects/visual-aoc/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/my-lib/ng-package.json"
+            "project": "projects/visual-aoc/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/my-lib/tsconfig.lib.prod.json"
+              "tsConfig": "projects/visual-aoc/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/my-lib/tsconfig.lib.json"
+              "tsConfig": "projects/visual-aoc/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,7 +27,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/my-lib/tsconfig.spec.json",
+            "tsConfig": "projects/visual-aoc/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
@@ -37,14 +37,14 @@
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
           "options": {
-            "configDir": "projects/my-lib/.storybook",
-            "browserTarget": "my-lib:build",
+            "configDir": "projects/visual-aoc/.storybook",
+            "browserTarget": "visual-aoc:build",
             "compodoc": true,
             "compodocArgs": [
               "-e",
               "json",
               "-d",
-              "projects/my-lib"
+              "projects/visual-aoc"
             ],
             "port": 6006
           }
@@ -52,14 +52,14 @@
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
           "options": {
-            "configDir": "projects/my-lib/.storybook",
-            "browserTarget": "my-lib:build",
+            "configDir": "projects/visual-aoc/.storybook",
+            "browserTarget": "visual-aoc:build",
             "compodoc": true,
             "compodocArgs": [
               "-e",
               "json",
               "-d",
-              "projects/my-lib"
+              "projects/visual-aoc"
             ],
             "outputDir": "storybook-static"
           }
@@ -68,6 +68,6 @@
     }
   },
   "cli": {
-    "analytics": "6837ec8e-2aaa-4f28-af2d-bbda2e30a3b0"
+    "analytics": "ac4b6a10-cbe1-4ae8-87a2-e53ce13ecd2f"
   }
 }

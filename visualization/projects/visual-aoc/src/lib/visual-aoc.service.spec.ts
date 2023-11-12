@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MyLibService } from './my-lib.service';
+import { VisualAocService } from './visual-aoc.service';
 
-describe('MyLibService', () => {
-  let service: MyLibService;
+describe('VisualAocService', () => {
+  let service: VisualAocService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(MyLibService);
+    service = TestBed.inject(VisualAocService);
   });
 
   it('should be created', () => {

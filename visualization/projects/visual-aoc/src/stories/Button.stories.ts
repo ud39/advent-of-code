@@ -16,6 +16,9 @@ const meta: Meta<Button> = {
     backgroundColor: {
       control: 'color',
     },
+    color: {
+      control: 'color',
+    },
   },
 };
 
