@@ -11,6 +11,8 @@ import { SafeHtmlPipe } from "./safe-html.pipe";
 import { CodeComponent } from "./code/code.component";
 import { HighlightOptions, HIGHLIGHT_OPTIONS } from "ngx-highlightjs";
 import { PlaceholderComponent } from "./placeholder/placeholder.component";
+import { SearchComponent } from "./search/search.component";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -21,8 +23,9 @@ import { PlaceholderComponent } from "./placeholder/placeholder.component";
     CardComponent,
     SafeHtmlPipe,
     PlaceholderComponent,
+    SearchComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, CodeComponent],
+  imports: [BrowserModule, HttpClientModule, CodeComponent, FormsModule],
   providers: [
     {
       provide: HIGHLIGHT_OPTIONS,
