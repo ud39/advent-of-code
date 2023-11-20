@@ -2,9 +2,9 @@
   <header class="w-full">
     <h2 class="m-auto block w-fit">{{ recentYear }}</h2>
   </header>
-  <app-search *ngIf="!isLoading" />
+  <app-search class="w-full justify-center flex" *ngIf="!isLoading" (searchTerm)="searchChallenge($event)" />
   <ng-container *ngIf="!isLoading; else loadingBlock">
-    <section class="" *ngFor="let day of cards">
+    <section class="mt-10" *ngFor="let day of cards">
       <ng-container *ngIf="cardContents[day].length > 0 && cardContents[day][0] !== undefined; else elseBlock">
         <app-card [day]="day" [recentYear]="recentYear" [languages]="languages" [logos]="avaiableSolutions[day]"
           [title]="inputData[day]" [cardContents]="cardContents[day]" />

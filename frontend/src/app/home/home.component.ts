@@ -1,8 +1,16 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Language, Solution, InputData } from "../interfaces/interface";
 import { NumericRange, CardContents, AvailableSolutions } from "../types";
-import { Observable, delay, forkJoin } from "rxjs";
+import {
+  Observable,
+  debounceTime,
+  distinctUntilChanged,
+  forkJoin,
+  map,
+  of,
+} from "rxjs";
+import { searchForm } from "../search/search.component";
 
 @Component({
   selector: "app-home",
@@ -10,6 +18,7 @@ import { Observable, delay, forkJoin } from "rxjs";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
+  @Input() searchTerm: string = "";
   isLoading: boolean = true;
   cards: number[] = [];
   languages: string[] = [];
@@ -22,46 +31,44 @@ export class HomeComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.getNumberOfSolutions()
-      .pipe(delay(2000))
-      .subscribe({
-        next: ([languages, solutions, inputs]) => {
-          this.cards = Array.from(
-            new Set(solutions.map((solution) => solution.day))
-          ).sort((a, b) => a - b);
+    this.getNumberOfSolutions().subscribe({
+      next: ([languages, solutions, inputs]) => {
+        this.cards = Array.from(
+          new Set(solutions.map((solution) => solution.day))
+        ).sort((a, b) => a - b);
 
-          this.inputData = {};
-          inputs
-            .map((input) => ({ [input.day]: input.title.split("---")[1] }))
-            .forEach((obj) => {
-              const key = Object.keys(obj)[0];
-              this.inputData[Number(key)] = Object.values(obj)[0];
-            });
+        this.inputData = {};
+        inputs
+          .map((input) => ({ [input.day]: input.title.split("---")[1] }))
+          .forEach((obj) => {
+            const key = Object.keys(obj)[0];
+            this.inputData[Number(key)] = Object.values(obj)[0];
+          });
 
-          solutions.sort((a, b) => a.language_id - b.language_id);
+        solutions.sort((a, b) => a.language_id - b.language_id);
 
-          for (const { day, language_id, code } of solutions) {
-            for (const { id, language, logo } of languages) {
-              if (id === language_id) {
-                let cardContent: CardContents[number] extends Array<infer U>
-                  ? U
-                  : never = { code: code, language: language, language_id };
-                if (this.cardContents[day] === undefined) {
-                  this.cardContents[day] = [cardContent];
-                  this.avaiableSolutions[day] = [logo];
-                } else {
-                  this.cardContents[day].push(cardContent);
-                  this.avaiableSolutions[day].push(logo);
-                }
+        for (const { day, language_id, code } of solutions) {
+          for (const { id, language, logo } of languages) {
+            if (id === language_id) {
+              let cardContent: CardContents[number] extends Array<infer U>
+                ? U
+                : never = { code: code, language: language, language_id };
+              if (this.cardContents[day] === undefined) {
+                this.cardContents[day] = [cardContent];
+                this.avaiableSolutions[day] = [logo];
+              } else {
+                this.cardContents[day].push(cardContent);
+                this.avaiableSolutions[day].push(logo);
               }
             }
           }
-          this.isLoading = false;
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-      });
+        }
+        this.isLoading = false;
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
   }
 
   getNumberOfSolutions(
@@ -89,6 +96,22 @@ export class HomeComponent implements OnInit {
     );
 
     return forkJoin([languages$, solutions$, inputData$]);
+  }
+
+  searchChallenge(searchForm: searchForm) {
+    type searchFormShape<T> = {
+      [K in keyof T]: T[K] | undefined;
+    };
+    const searchTerm$: Observable<searchFormShape<searchForm>> = of(searchForm);
+
+    searchTerm$
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        map((term) => (typeof term === "string" ? term : null))
+      )
+      //TODO search for challenges that fits the input
+      .subscribe();
   }
 }
 

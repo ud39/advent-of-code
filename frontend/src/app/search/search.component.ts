@@ -1,5 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { NgForm } from "@angular/forms";
+
+export interface searchForm {
+  searchTerm: string | number;
+}
 
 @Component({
   selector: "app-search",
@@ -7,9 +11,11 @@ import { NgForm } from "@angular/forms";
   styleUrls: ["./search.component.scss"],
 })
 export class SearchComponent {
-  searchTerm: string = "";
+  @Output() searchTerm: EventEmitter<searchForm> =
+    new EventEmitter<searchForm>();
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm): void {
+    this.searchTerm.emit(form.value);
     form.resetForm();
   }
 }
