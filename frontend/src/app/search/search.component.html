@@ -1,6 +1,5 @@
-<form #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm)" class="flex flex-row flex-wrap w-2/12">
-    <label for="searchTerm" class="basis-3/12">Challenge</label>
-    <input type="text" name="searchTerm" id="searchTerm" class="border-solid border-2 border-green-700 basis-9/12 mb-2"
-        ngModel>
-    <button class="hidden">Submit</button>
-</form>
+<section class="mt-10">
+    <label for="searchTerm" class="basis-1/12 mr-10">Challenge</label>
+    <input type="text" name="searchTerm" id="searchTerm" class="border-solid border-2 border-green-700 basis-2/12 mb-2"
+        [(ngModel)]="searchTerm" (input)="onInputChange()">
+</section>

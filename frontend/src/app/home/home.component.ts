@@ -10,7 +10,10 @@ import {
   map,
   of,
 } from "rxjs";
-import { searchForm } from "../search/search.component";
+
+type searchFormShape<T> = {
+  [K in keyof T]: T[K] | undefined;
+};
 
 @Component({
   selector: "app-home",
@@ -98,20 +101,8 @@ export class HomeComponent implements OnInit {
     return forkJoin([languages$, solutions$, inputData$]);
   }
 
-  searchChallenge(searchForm: searchForm) {
-    type searchFormShape<T> = {
-      [K in keyof T]: T[K] | undefined;
-    };
-    const searchTerm$: Observable<searchFormShape<searchForm>> = of(searchForm);
-
-    searchTerm$
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        map((term) => (typeof term === "string" ? term : null))
-      )
-      //TODO search for challenges that fits the input
-      .subscribe();
+  searchChallenge(searchTerm: string) {
+    console.log(searchTerm);
   }
 }
 
