@@ -13,6 +13,7 @@ import { HighlightOptions, HIGHLIGHT_OPTIONS } from "ngx-highlightjs";
 import { PlaceholderComponent } from "./placeholder/placeholder.component";
 import { SearchComponent } from "./search/search.component";
 import { FormsModule } from "@angular/forms";
+import { YearSelectorComponent } from './year-selector/year-selector.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FormsModule } from "@angular/forms";
     SafeHtmlPipe,
     PlaceholderComponent,
     SearchComponent,
+    YearSelectorComponent,
   ],
   imports: [BrowserModule, HttpClientModule, CodeComponent, FormsModule],
   providers: [

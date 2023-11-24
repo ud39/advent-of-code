@@ -1,18 +1,23 @@
 <main class="flex justify-center flex-wrap">
   <header class="w-full">
-    <h2 class="m-auto block w-fit">{{ recentYear }}</h2>
+    <h2 class="m-auto block w-fit underline text-4xl ">{{ selectedYear }}</h2>
   </header>
-  <app-search class="w-full justify-center flex" *ngIf="!isLoading" (searchTermChange)="searchChallenge($event)" />
+  <section class="basis-full flex justify-center gap-5 mt-5">
+    <app-search class="justify-center flex" (searchTermChange)="searchChallenge($event)" />
+    <app-year-selector class="self-center" (selectedYear)="setYear($event)" />
+  </section>
   <ng-container *ngIf="!isLoading; else loadingBlock">
-    <section class="mt-10" *ngFor="let day of cards">
-      <ng-container *ngIf="cardContents[day].length > 0 && cardContents[day][0] !== undefined; else elseBlock">
-        <app-card [day]="day" [recentYear]="recentYear" [languages]="languages" [logos]="availableSolutions[day]"
-          [title]="inputData[day]" [cardContents]="cardContents[day]" />
-      </ng-container>
-      <ng-template #elseBlock>
-        <app-placeholder />
-      </ng-template>
-    </section>
+    <ng-container *ngIf="cards.length > 0 else elseBlock">
+      <section class="mt-10" *ngFor="let day of cards">
+        <ng-container *ngIf="cardContents[day].length > 0 && cardContents[day][0] !== undefined; else elseBlock">
+          <app-card [day]="day" [recentYear]="selectedYear" [languages]="languages" [logos]="availableSolutions[day]"
+            [title]="inputData[day]" [cardContents]="cardContents[day]" />
+        </ng-container>
+      </section>
+    </ng-container>
+    <ng-template #elseBlock>
+      <div class="mt-15">This year no challenges were done :( </div>
+    </ng-template>
   </ng-container>
   <ng-template #loadingBlock>
     <app-placeholder />
