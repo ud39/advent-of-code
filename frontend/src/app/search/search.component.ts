@@ -26,7 +26,7 @@ export class SearchComponent implements OnDestroy {
         debounceTime(300),
         distinctUntilChanged(),
         map((term) => term.toLocaleLowerCase()),
-        filter((term) => term.length > 3)
+        filter((term) => term.length > 3 || term.length === 0)
       )
       .subscribe((term) => this.searchTermChange.emit(term));
   }

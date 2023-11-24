@@ -1,5 +1,6 @@
 <section class="mt-10">
-    <label for="searchTerm" class="basis-1/12 mr-10">Challenge</label>
-    <input type="text" name="searchTerm" id="searchTerm" class="border-solid border-2 border-green-700 basis-2/12 mb-2"
-        [(ngModel)]="searchTerm" (input)="onInputChange()">
+    <label for="searchTerm" class="basis-1/12 mr-10">Search Challenge</label>
+    <input type="text" name="searchTerm" id="searchTerm"
+        class="border-solid border-2 border-green-700 rounded-md basis-2/12 mb-2 p-2" [(ngModel)]="searchTerm"
+        (input)="onInputChange()" placeholder=" Day, Challenge">
 </section>

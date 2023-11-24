@@ -2,14 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Language, Solution, InputData } from "../interfaces/interface";
 import { NumericRange, CardContents, AvailableSolutions } from "../types";
-import {
-  Observable,
-  debounceTime,
-  distinctUntilChanged,
-  forkJoin,
-  map,
-  of,
-} from "rxjs";
+import { Observable, forkJoin } from "rxjs";
 
 type searchFormShape<T> = {
   [K in keyof T]: T[K] | undefined;
@@ -24,11 +17,12 @@ export class HomeComponent implements OnInit {
   @Input() searchTerm: string = "";
   isLoading: boolean = true;
   cards: number[] = [];
+  initialCards: number[] = [];
   languages: string[] = [];
   year: NumericRange<2015, typeof recentYear> = recentYear;
   recentYear: number = recentYear;
   cardContents: CardContents = {};
-  avaiableSolutions: AvailableSolutions = {};
+  availableSolutions: AvailableSolutions = {};
   inputData: { [day: number]: string } = {};
 
   constructor(private http: HttpClient) {}
@@ -58,15 +52,16 @@ export class HomeComponent implements OnInit {
                 : never = { code: code, language: language, language_id };
               if (this.cardContents[day] === undefined) {
                 this.cardContents[day] = [cardContent];
-                this.avaiableSolutions[day] = [logo];
+                this.availableSolutions[day] = [logo];
               } else {
                 this.cardContents[day].push(cardContent);
-                this.avaiableSolutions[day].push(logo);
+                this.availableSolutions[day].push(logo);
               }
             }
           }
         }
         this.isLoading = false;
+        this.initialCards = [...this.cards];
       },
       error: (err: any) => {
         console.log(err);
@@ -102,7 +97,13 @@ export class HomeComponent implements OnInit {
   }
 
   searchChallenge(searchTerm: string) {
-    console.log(searchTerm);
+    if (!searchTerm) this.cards = this.initialCards;
+
+    const matchingChallenges: Array<number> = Object.keys(this.inputData)
+      .map((key) => Number(key))
+      .filter((key) => this.inputData[key].toLowerCase().includes(searchTerm));
+
+    this.cards = matchingChallenges;
   }
 }
 
