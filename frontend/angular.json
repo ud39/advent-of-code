@@ -121,6 +121,7 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "frontend:build",
+            "styles": ["src/styles.scss"],
             "compodoc": true,
             "compodocArgs": [
               "-e",
