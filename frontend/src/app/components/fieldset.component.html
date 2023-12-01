@@ -1,0 +1,6 @@
+<fieldset>
+    <legend>{{fieldsetType}}</legend>
+    <ng-container *ngFor="let tag of availableTags">
+        <app-tag [tag]="tag"></app-tag>
+    </ng-container>
+</fieldset>
