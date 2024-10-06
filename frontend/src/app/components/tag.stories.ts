@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/angular";
 import { argsToTemplate } from "@storybook/angular";
-import { action } from "@storybook/addon-actions";
-
 import TagComponent from "./TagComponent";
 
 const meta: Meta<TagComponent> = {
@@ -9,7 +7,7 @@ const meta: Meta<TagComponent> = {
   component: TagComponent,
   excludeStories: /.*Data$/,
   tags: ["autodocs"],
-  render: (args: TagComponent) => ({
+  render: (args) => ({
     props: {
       ...args,
     },

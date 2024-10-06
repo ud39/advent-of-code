@@ -16,7 +16,7 @@ const meta: Meta<TaskComponent> = {
   component: TaskComponent,
   excludeStories: /.*Data$/,
   tags: ["autodocs"],
-  render: (args: TaskComponent) => ({
+  render: (args) => ({
     props: {
       ...args,
       onPinTask: actionsData.onPinTask,

@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { HttpClientModule } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { BrowserModule } from "@angular/platform-browser";
 
 import { AppComponent } from "./app.component";
@@ -15,38 +15,35 @@ import { SearchComponent } from "./search/search.component";
 import { FormsModule } from "@angular/forms";
 import { YearSelectorComponent } from './year-selector/year-selector.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    NavComponent,
-    FooterComponent,
-    CardComponent,
-    SafeHtmlPipe,
-    PlaceholderComponent,
-    SearchComponent,
-    YearSelectorComponent,
-  ],
-  imports: [BrowserModule, HttpClientModule, CodeComponent, FormsModule],
-  providers: [
-    {
-      provide: HIGHLIGHT_OPTIONS,
-      useValue: <HighlightOptions>{
-        lineNumbers: true,
-        coreLibraryLoader: () => import("highlight.js/lib/core"),
-        lineNumbersLoader: () => import("ngx-highlightjs/line-numbers"),
-        languages: {
-          typescript: () => import("highlight.js/lib/languages/typescript"),
-          javascript: () => import("highlight.js/lib/languages/javascript"),
-          c: () => import("highlight.js/lib/languages/c"),
-          cpp: () => import("highlight.js/lib/languages/cpp"),
-          python: () => import("highlight.js/lib/languages/python"),
-          css: () => import("highlight.js/lib/languages/css"),
-          xml: () => import("highlight.js/lib/languages/xml"),
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        NavComponent,
+        FooterComponent,
+        CardComponent,
+        SafeHtmlPipe,
+        PlaceholderComponent,
+        SearchComponent,
+        YearSelectorComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule, CodeComponent, FormsModule], providers: [
+        {
+            provide: HIGHLIGHT_OPTIONS,
+            useValue: <HighlightOptions>{
+                lineNumbers: true,
+                coreLibraryLoader: () => import("highlight.js/lib/core"),
+                lineNumbersLoader: () => import("ngx-highlightjs/line-numbers"),
+                languages: {
+                    typescript: () => import("highlight.js/lib/languages/typescript"),
+                    javascript: () => import("highlight.js/lib/languages/javascript"),
+                    c: () => import("highlight.js/lib/languages/c"),
+                    cpp: () => import("highlight.js/lib/languages/cpp"),
+                    python: () => import("highlight.js/lib/languages/python"),
+                    css: () => import("highlight.js/lib/languages/css"),
+                    xml: () => import("highlight.js/lib/languages/xml"),
+                },
+            },
         },
-      },
-    },
-  ],
-  bootstrap: [AppComponent],
-})
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {}

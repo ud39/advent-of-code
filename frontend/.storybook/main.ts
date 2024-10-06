@@ -1,5 +1,4 @@
 import type { StorybookConfig } from "@storybook/angular";
-import { withThemeByDataAttribute } from "@storybook/addon-themes/*";
 
 const config: StorybookConfig = {
   stories: ["../src/app/components/**/*.stories.ts"],
@@ -9,14 +8,13 @@ const config: StorybookConfig = {
     "@storybook/addon-interactions",
     "@storybook/addon-themes",
     "@storybook/themes",
+    "@chromatic-com/storybook",
   ],
   framework: {
     name: "@storybook/angular",
     options: {},
   },
-  docs: {
-    autodocs: "tag",
-  },
+  docs: {},
 };
 
 export default config;

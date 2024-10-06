@@ -4,7 +4,9 @@ import { argsToTemplate, moduleMetadata } from "@storybook/angular";
 import FieldsetComponent from "./FieldsetComponent";
 import * as TagStories from "./tag.stories";
 import TagComponent from "./TagComponent";
+import { EventEmitter } from "@angular/core";
 
+// Define Meta for the FieldsetComponent
 const meta: Meta<FieldsetComponent> = {
   component: FieldsetComponent,
   excludeStories: /.*Data$/,
@@ -14,17 +16,31 @@ const meta: Meta<FieldsetComponent> = {
       declarations: [FieldsetComponent, TagComponent],
     }),
   ],
-  render: (args: FieldsetComponent) => ({
-    props: {
-      ...args,
-    },
-    template: `<app-fieldset ${argsToTemplate(args)}></app-fieldset>`,
-  }),
+  render: (args) => {
+    // Initialize the EventEmitter for selectedTagsOutput
+    const selectedTagsOutput = new EventEmitter<string[]>();
+
+    // Handle emitted values if necessary (optional)
+    selectedTagsOutput.subscribe((tags) => {
+      console.log("Selected Tags:", tags);
+    });
+
+    return {
+      props: {
+        selectedTagsOutput,
+        availableTags: args.availableTags,
+        fieldsetType: args.fieldsetType,
+        tagComponents: args.tagComponents,
+      },
+      template: `<app-fieldset ${argsToTemplate(args)}></app-fieldset>`,
+    };
+  },
 };
 
 export default meta;
 type Story = StoryObj<FieldsetComponent>;
 
+// Define different story variants
 export const DefaultLanguages: Story = {
   args: {
     fieldsetType: "languages",
