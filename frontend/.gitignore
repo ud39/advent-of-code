@@ -39,4 +39,9 @@ testem.log
 
 # System files
 .DS_Store
+.cache
 Thumbs.db
+
+
+# AOC related stuff
+../2022/*
