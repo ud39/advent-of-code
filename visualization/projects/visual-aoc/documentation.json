@@ -348,7 +348,7 @@
         },
         {
             "name": "VisualAocComponent",
-            "id": "component-VisualAocComponent-09dd49aa284eaebb50d88e0374076e1ee19f931c43d2aa12a0ef4ff60dca3a211a33d48524ceb4c2187150763e6a3a979c8040c95a1dd6eb1175590550e300e8",
+            "id": "component-VisualAocComponent-0fd71b935b08323a0f49e51a75428e606d89dceecf443cb6f16f0094e96bf38b1b8005a7ed30f67451ea5585bfd12e50b1e91c62aa99dc63e97e4958548901f7",
             "file": "projects/visual-aoc/src/lib/visual-aoc.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -358,7 +358,7 @@
             "selector": "lib-visual-aoc",
             "styleUrls": [],
             "styles": [],
-            "template": "<p>\n  visual-aoc works!\n</p>\n",
+            "template": "<p>visual-aoc works!</p>",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -380,7 +380,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\n@Component({\n  selector: 'lib-visual-aoc',\n  standalone: true,\n  imports: [CommonModule],\n  template: `\n    <p>\n      visual-aoc works!\n    </p>\n  `,\n  styles: [\n  ]\n})\nexport class VisualAocComponent {\n\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\n@Component({\n  selector: 'lib-visual-aoc',\n  standalone: true,\n  imports: [CommonModule],\n  template: ` <p>visual-aoc works!</p> `,\n  styles: [],\n})\nexport class VisualAocComponent {}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -448,7 +448,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<Button>",
-                "defaultValue": "{\n  title: 'Example/Button',\n  component: Button,\n  tags: ['autodocs'],\n  render: (args: Button) => ({\n    props: {\n      backgroundColor: null,\n      ...args,\n    },\n  }),\n  argTypes: {\n    backgroundColor: {\n      control: 'color',\n    },\n    color: {\n      control: 'color',\n    },\n  },\n}"
+                "defaultValue": "{\n  title: 'Example/Button',\n  component: Button,\n  tags: ['autodocs'],\n  render: (args) => ({\n    props: {\n      backgroundColor: null,\n      ...args,\n    },\n  }),\n  argTypes: {\n    backgroundColor: {\n      control: 'color',\n    },\n    color: {\n      control: 'color',\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -568,7 +568,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<Button>",
-                    "defaultValue": "{\n  title: 'Example/Button',\n  component: Button,\n  tags: ['autodocs'],\n  render: (args: Button) => ({\n    props: {\n      backgroundColor: null,\n      ...args,\n    },\n  }),\n  argTypes: {\n    backgroundColor: {\n      control: 'color',\n    },\n    color: {\n      control: 'color',\n    },\n  },\n}"
+                    "defaultValue": "{\n  title: 'Example/Button',\n  component: Button,\n  tags: ['autodocs'],\n  render: (args) => ({\n    props: {\n      backgroundColor: null,\n      ...args,\n    },\n  }),\n  argTypes: {\n    backgroundColor: {\n      control: 'color',\n    },\n    color: {\n      control: 'color',\n    },\n  },\n}"
                 },
                 {
                     "name": "Primary",
