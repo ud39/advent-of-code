@@ -1,0 +1,4 @@
+<button (click)="sortArray()">Stuff</button>
+<ul #array class="items">
+  <li *ngFor="let elem of inputArray" [@listAnimation]>{{ elem }}</li>
+</ul>
