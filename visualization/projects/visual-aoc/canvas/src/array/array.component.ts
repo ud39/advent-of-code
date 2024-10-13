@@ -1,5 +1,11 @@
 import { AfterViewInit, Component, ViewChild, ElementRef } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  state,
+} from '@angular/animations';
 import { NgFor } from '@angular/common';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -12,26 +18,24 @@ import { provideAnimations } from '@angular/platform-browser/animations';
   styleUrls: ['./array.component.css'],
   animations: [
     trigger('listAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }), // Start from transparent
-        animate('300ms', style({ opacity: 1 })), // Fade to opaque
-      ]),
-      transition(':leave', [
-        animate('300ms', style({ opacity: 0 })), // Fade out
-      ]),
+      state('enabled', style({ color: 'red', opacity: 1 })), // Define state for 'enabled'
+      state('disabled', style({ color: 'blue', opacity: 1 })), // Define state for 'disabled'
+
+      transition('enabled <=> disabled', [animate('300ms')]),
     ]),
   ],
 })
 export default class ArrayComponent implements AfterViewInit {
   @ViewChild('array') array!: ElementRef<HTMLUListElement>;
+  isAnimationEnabled: boolean = false;
   inputArray: number[] = [1, 2, 3, 4];
 
   constructor() {}
 
   ngAfterViewInit(): void {}
 
-  sortArray() {
-    this.inputArray.sort((a, b) => a - b);
+  toogleAnimation() {
+    this.isAnimationEnabled = !this.isAnimationEnabled;
   }
 }
 

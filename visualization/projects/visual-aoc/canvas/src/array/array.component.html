@@ -1,4 +1,8 @@
-<button (click)="sortArray()">Stuff</button>
-<ul #array class="items">
-  <li *ngFor="let elem of inputArray" [@listAnimation]>{{ elem }}</li>
+<button (click)="toogleAnimation()">Animate</button>
+<ul
+  #array
+  class="items"
+  [@listAnimation]="isAnimationEnabled ? 'enabled' : 'disabled'"
+>
+  <li *ngFor="let elem of inputArray">{{ elem }}</li>
 </ul>
