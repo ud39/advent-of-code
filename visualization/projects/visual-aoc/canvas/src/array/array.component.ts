@@ -5,10 +5,12 @@ import {
   style,
   animate,
   state,
+  useAnimation,
 } from '@angular/animations';
 import { NgFor } from '@angular/common';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { colorChangeAnimation } from '../animations';
 
 @Component({
   selector: 'lib-array',
@@ -18,10 +20,13 @@ import { provideAnimations } from '@angular/platform-browser/animations';
   styleUrls: ['./array.component.css'],
   animations: [
     trigger('listAnimation', [
-      state('enabled', style({ color: 'red', opacity: 1 })), // Define state for 'enabled'
-      state('disabled', style({ color: 'blue', opacity: 1 })), // Define state for 'disabled'
-
-      transition('enabled <=> disabled', [animate('300ms')]),
+      state('enabled', style({ color: 'red' })),
+      state('disabled', style({ color: 'blue' })),
+      transition('enabled <=> disabled', [
+        useAnimation(colorChangeAnimation, {
+          params: { fromColor: 'red', toColor: 'blue' },
+        }),
+      ]),
     ]),
   ],
 })
