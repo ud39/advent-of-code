@@ -28,19 +28,84 @@ import { colorChangeAnimation } from '../animations';
         }),
       ]),
     ]),
+    trigger('startInsertElement', [
+      state('start', style({ color: 'yellow' })),
+      state('end', style({ color: 'black' })),
+      transition('start <=> end', [animate('100ms')]),
+    ]),
   ],
 })
 export default class ArrayComponent implements AfterViewInit {
   @ViewChild('array') array!: ElementRef<HTMLUListElement>;
-  isAnimationEnabled: boolean = false;
-  inputArray: number[] = [1, 2, 3, 4];
+  animationEnabled: boolean = false;
+  startInsertElement: boolean = false;
+  inputArray: { value: number; animationState: 'start' | 'end' }[] = [
+    { value: 1, animationState: 'end' },
+    { value: 2, animationState: 'end' },
+    { value: 3, animationState: 'end' },
+    { value: 4, animationState: 'end' },
+  ];
 
   constructor() {}
 
   ngAfterViewInit(): void {}
 
+  addElement(num: number = 1337): void {
+    this.inputArray.push({ value: num, animationState: 'start' });
+    this.triggerInsertLastElementAnimation(num);
+  }
+
   toogleAnimation() {
-    this.isAnimationEnabled = !this.isAnimationEnabled;
+    this.animationEnabled = !this.animationEnabled;
+  }
+
+  sleep = (delay: number = 1000) => {
+    setTimeout(() => {}, delay);
+  };
+
+  triggerInsertElementAnimation(
+    num: number = 0,
+    delay: number = 1000,
+    index: number = 0,
+  ): void {
+    const addedElement: { value: number; animationState: 'start' | 'end' } = {
+      value: num,
+      animationState: 'start',
+    };
+    this.inputArray.splice(index, 1, addedElement);
+    setTimeout(() => {
+      addedElement.animationState = 'end';
+    }, delay);
+  }
+
+  triggerElementHighlightAnimation(
+    elem: {
+      value: number;
+      animationState: 'start' | 'end';
+    },
+    delay: number = 1000,
+  ): void {
+    setTimeout(() => {}, delay);
+  }
+
+  triggerRemoveElementAnimation(delay: number = 1000, index: number = 0): void {
+    const removeElements = this.inputArray.slice(0);
+    removeElements.map((elem) => {
+      elem.animationState = 'start';
+    });
+
+    setTimeout(() => {
+      removeElements.map((elem) => {
+        elem.animationState = 'end';
+      });
+    }, delay);
+  }
+
+  triggerInsertLastElementAnimation(num: number, delay: number = 1000): void {
+    const addedElement = this.inputArray[this.inputArray.length - 1];
+    setTimeout(() => {
+      if (addedElement) addedElement.animationState = 'end';
+    }, delay);
   }
 }
 

@@ -1,8 +1,13 @@
 <button (click)="toogleAnimation()">Animate</button>
-<ul
-  #array
-  class="items"
-  [@listAnimation]="isAnimationEnabled ? 'enabled' : 'disabled'"
->
-  <li *ngFor="let elem of inputArray">{{ elem }}</li>
+<button (click)="addElement()">AddElement</button>
+<button (click)="triggerInsertElementAnimation()">Add Element at</button>
+<ul #array class="items">
+  <li
+    *ngFor="let elem of inputArray"
+    [@listAnimation]="animationEnabled ? 'enabled' : 'disabled'"
+  >
+    <p [@startInsertElement]="elem.animationState">
+      {{ elem.value }}
+    </p>
+  </li>
 </ul>
