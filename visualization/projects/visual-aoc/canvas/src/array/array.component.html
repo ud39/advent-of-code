@@ -1,7 +1,7 @@
 <button (click)="toogleAnimation()">Animate</button>
-<button (click)="addElement()">Add element</button>
 <button (click)="triggerInsertElementAnimation()">Add element at</button>
 <button (click)="triggerRemoveElementAnimation()">Remove element</button>
+<button (click)="triggerSwappingAnimation()">Swapping elements</button>
 <ul #array class="items">
   <li
     *ngFor="let elem of inputArray"
