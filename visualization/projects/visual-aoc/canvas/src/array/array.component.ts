@@ -12,6 +12,11 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { colorChangeAnimation } from '../animations';
 
+type elementWithAnimationState = {
+  value: number;
+  animationState: 'start' | 'end' | 'transition';
+};
+
 @Component({
   selector: 'lib-array',
   standalone: true,
@@ -39,21 +44,16 @@ export default class ArrayComponent implements AfterViewInit {
   @ViewChild('array') array!: ElementRef<HTMLUListElement>;
   animationEnabled: boolean = false;
   startInsertElement: boolean = false;
-  inputArray: { value: number; animationState: 'start' | 'end' }[] = [
-    { value: 1, animationState: 'end' },
-    { value: 2, animationState: 'end' },
-    { value: 3, animationState: 'end' },
+  inputArray: elementWithAnimationState[] = [
     { value: 4, animationState: 'end' },
+    { value: 3, animationState: 'end' },
+    { value: 2, animationState: 'end' },
+    { value: 1, animationState: 'end' },
   ];
 
   constructor() {}
 
   ngAfterViewInit(): void {}
-
-  addElement(num: number = 1337): void {
-    this.inputArray.push({ value: num, animationState: 'start' });
-    this.triggerInsertLastElementAnimation(num);
-  }
 
   toogleAnimation() {
     this.animationEnabled = !this.animationEnabled;
@@ -63,59 +63,84 @@ export default class ArrayComponent implements AfterViewInit {
     num: number = 0,
     delay: number = 1000,
     index: number = 0,
-  ): void {
-    const addedElement: { value: number; animationState: 'start' | 'end' } = {
-      value: num,
-      animationState: 'start',
-    };
-    this.inputArray.splice(index, 1, addedElement);
-    setTimeout(() => {
-      addedElement.animationState = 'end';
-    }, delay);
+  ): Promise<void> {
+    return new Promise((resolve) => {
+      const addedElement: { value: number; animationState: 'start' | 'end' } = {
+        value: num,
+        animationState: 'start',
+      };
+      this.inputArray.splice(index, 1, addedElement);
+      setTimeout(() => {
+        addedElement.animationState = 'end';
+        resolve();
+      }, delay);
+    });
   }
 
   triggerElementHighlightAnimation(
-    elem: {
-      value: number;
-      animationState: 'start' | 'end';
-    },
+    elem: elementWithAnimationState,
     delay: number = 1000,
-  ): void {
-    setTimeout(() => {}, delay);
+  ): Promise<void> {
+    return new Promise((resolve) => {
+      elem.animationState = 'start';
+      setTimeout(() => {
+        elem.animationState = 'end';
+        resolve();
+      }, delay);
+    });
   }
 
   triggerRemoveElementAnimation(
     delay: number = 1000,
     startIndex: number = 1,
     endIndex: number = startIndex + 1,
-  ): void {
-    const removeElements = this.inputArray.slice(startIndex, endIndex);
-    removeElements.map((elem) => {
-      elem.animationState = 'start';
-    });
-
-    setTimeout(() => {
+  ): Promise<void> {
+    return new Promise((resolve) => {
+      const removeElements = this.inputArray.slice(startIndex, endIndex);
       removeElements.map((elem) => {
-        elem.animationState = 'end';
-        if (startIndex === 0) {
-          this.inputArray = this.inputArray.slice(
-            endIndex,
+        elem.animationState = 'start';
+      });
+
+      setTimeout(() => {
+        removeElements.map((elem) => {
+          elem.animationState = 'end';
+          if (startIndex === 0) {
+            this.inputArray = this.inputArray.slice(
+              endIndex,
+              this.inputArray.length,
+            );
+          }
+          const firstHalfOfInputArray = this.inputArray.slice(0, startIndex);
+          const secondHalfOfInputArray = this.inputArray.slice(
+            startIndex + 1,
             this.inputArray.length,
           );
-        }
-        const firstHalfOfInputArray = this.inputArray.slice(0, startIndex);
-        this.inputArray = firstHalfOfInputArray.concat(
-          this.inputArray.slice(startIndex + 1, this.inputArray.length),
-        );
-      });
-    }, delay);
+          this.triggerConcatArrayAnimation(
+            1000,
+            firstHalfOfInputArray,
+            secondHalfOfInputArray,
+          );
+          resolve();
+        });
+      }, delay);
+    });
   }
 
-  triggerInsertLastElementAnimation(num: number, delay: number = 1000): void {
-    const addedElement = this.inputArray[this.inputArray.length - 1];
-    setTimeout(() => {
-      if (addedElement) addedElement.animationState = 'end';
-    }, delay);
+  triggerConcatArrayAnimation(
+    delay: number = 1000,
+    firstHalfOfArray: elementWithAnimationState[],
+    secondHalfOfArray: elementWithAnimationState[],
+  ): Promise<void> {
+    return new Promise((resolve) => {
+      firstHalfOfArray.forEach((elem) => (elem.animationState = 'start'));
+      secondHalfOfArray.forEach((elem) => (elem.animationState = 'start'));
+      setTimeout(() => {
+        firstHalfOfArray.forEach((elem) => (elem.animationState = 'end'));
+        secondHalfOfArray.forEach((elem) => (elem.animationState = 'end'));
+        this.inputArray = firstHalfOfArray.concat(secondHalfOfArray);
+        resolve();
+      }, delay);
+    });
   }
 }
 
