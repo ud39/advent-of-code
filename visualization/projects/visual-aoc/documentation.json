@@ -348,7 +348,7 @@
         },
         {
             "name": "VisualAocComponent",
-            "id": "component-VisualAocComponent-0fd71b935b08323a0f49e51a75428e606d89dceecf443cb6f16f0094e96bf38b1b8005a7ed30f67451ea5585bfd12e50b1e91c62aa99dc63e97e4958548901f7",
+            "id": "component-VisualAocComponent-09dd49aa284eaebb50d88e0374076e1ee19f931c43d2aa12a0ef4ff60dca3a211a33d48524ceb4c2187150763e6a3a979c8040c95a1dd6eb1175590550e300e8",
             "file": "projects/visual-aoc/src/lib/visual-aoc.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -358,7 +358,7 @@
             "selector": "lib-visual-aoc",
             "styleUrls": [],
             "styles": [],
-            "template": "<p>visual-aoc works!</p>",
+            "template": "<p>\n  visual-aoc works!\n</p>\n",
             "templateUrl": [],
             "viewProviders": [],
             "hostDirectives": [],
@@ -380,7 +380,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\n@Component({\n  selector: 'lib-visual-aoc',\n  standalone: true,\n  imports: [CommonModule],\n  template: ` <p>visual-aoc works!</p> `,\n  styles: [],\n})\nexport class VisualAocComponent {}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\n@Component({\n  selector: 'lib-visual-aoc',\n  standalone: true,\n  imports: [CommonModule],\n  template: `\n    <p>\n      visual-aoc works!\n    </p>\n  `,\n  styles: [\n  ]\n})\nexport class VisualAocComponent {\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -390,6 +390,76 @@
     "modules": [],
     "miscellaneous": {
         "variables": [
+            {
+                "name": "ActionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/visual-aoc/src/stories/Array.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{}"
+            },
+            {
+                "name": "ActionsData",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{}"
+            },
+            {
+                "name": "Active",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/visual-aoc/src/stories/Array.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {},\n}"
+            },
+            {
+                "name": "Active",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {},\n}"
+            },
+            {
+                "name": "colorChangeAnimation",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/visual-aoc/src/animations.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "animation([\n  state('enabled', style({ color: 'red', opacity: 1 })),\n  state('disabled', style({ color: 'blue', opacity: 1 })),\n  animate('{{ time }}'),\n])"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/visual-aoc/src/stories/Array.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {},\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {},\n}"
+            },
             {
                 "name": "Large",
                 "ctype": "miscellaneous",
@@ -444,11 +514,31 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/visual-aoc/src/stories/Array.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<ArrayComponent>",
+                "defaultValue": "{\n  title: 'Array',\n  component: ArrayComponent,\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimations()],\n    }),\n  ],\n  excludeStories: /.*Data$/,\n  tags: ['autodocs'],\n  args: {\n    ...ActionsData,\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/visual-aoc/src/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<Button>",
                 "defaultValue": "{\n  title: 'Example/Button',\n  component: Button,\n  tags: ['autodocs'],\n  render: (args) => ({\n    props: {\n      backgroundColor: null,\n      ...args,\n    },\n  }),\n  argTypes: {\n    backgroundColor: {\n      control: 'color',\n    },\n    color: {\n      control: 'color',\n    },\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<CanvasComponent>",
+                "defaultValue": "{\n  title: 'Canvas',\n  component: CanvasComponent,\n  excludeStories: /.*Data$/,\n  tags: ['autodocs'],\n  args: {\n    ...ActionsData,\n  },\n}"
             },
             {
                 "name": "meta",
@@ -517,8 +607,30 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
+                "rawtype": "StoryObj<ArrayComponent>",
+                "file": "projects/visual-aoc/src/stories/Array.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
                 "rawtype": "StoryObj<Button>",
                 "file": "projects/visual-aoc/src/stories/Button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<CanvasComponent>",
+                "file": "projects/visual-aoc/src/stories/Canvas.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -549,6 +661,102 @@
         ],
         "enumerations": [],
         "groupedVariables": {
+            "projects/visual-aoc/src/stories/Array.stories.ts": [
+                {
+                    "name": "ActionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/visual-aoc/src/stories/Array.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{}"
+                },
+                {
+                    "name": "Active",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/visual-aoc/src/stories/Array.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {},\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/visual-aoc/src/stories/Array.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {},\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/visual-aoc/src/stories/Array.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<ArrayComponent>",
+                    "defaultValue": "{\n  title: 'Array',\n  component: ArrayComponent,\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimations()],\n    }),\n  ],\n  excludeStories: /.*Data$/,\n  tags: ['autodocs'],\n  args: {\n    ...ActionsData,\n  },\n}"
+                }
+            ],
+            "projects/visual-aoc/src/stories/Canvas.stories.ts": [
+                {
+                    "name": "ActionsData",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{}"
+                },
+                {
+                    "name": "Active",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {},\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {},\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<CanvasComponent>",
+                    "defaultValue": "{\n  title: 'Canvas',\n  component: CanvasComponent,\n  excludeStories: /.*Data$/,\n  tags: ['autodocs'],\n  args: {\n    ...ActionsData,\n  },\n}"
+                }
+            ],
+            "projects/visual-aoc/src/animations.ts": [
+                {
+                    "name": "colorChangeAnimation",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/visual-aoc/src/animations.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "animation([\n  state('enabled', style({ color: 'red', opacity: 1 })),\n  state('disabled', style({ color: 'blue', opacity: 1 })),\n  animate('{{ time }}'),\n])"
+                }
+            ],
             "projects/visual-aoc/src/stories/Button.stories.ts": [
                 {
                     "name": "Large",
@@ -681,6 +889,19 @@
         "groupedFunctions": {},
         "groupedEnumerations": {},
         "groupedTypeAliases": {
+            "projects/visual-aoc/src/stories/Array.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<ArrayComponent>",
+                    "file": "projects/visual-aoc/src/stories/Array.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
             "projects/visual-aoc/src/stories/Button.stories.ts": [
                 {
                     "name": "Story",
@@ -688,6 +909,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<Button>",
                     "file": "projects/visual-aoc/src/stories/Button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "projects/visual-aoc/src/stories/Canvas.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<CanvasComponent>",
+                    "file": "projects/visual-aoc/src/stories/Canvas.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -724,7 +958,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 3,
+        "count": 2,
         "status": "low",
         "files": [
             {
@@ -733,6 +967,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "preview",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/visual-aoc/src/animations.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "colorChangeAnimation",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -753,6 +997,46 @@
                 "name": "VisualAocService",
                 "coveragePercent": 0,
                 "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/visual-aoc/src/stories/Array.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ActionsData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/visual-aoc/src/stories/Array.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Active",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/visual-aoc/src/stories/Array.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/visual-aoc/src/stories/Array.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -801,6 +1085,46 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Small",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ActionsData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Active",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/visual-aoc/src/stories/Canvas.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

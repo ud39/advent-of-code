@@ -1,6 +1,7 @@
 <button (click)="toogleAnimation()">Animate</button>
-<button (click)="addElement()">AddElement</button>
-<button (click)="triggerInsertElementAnimation()">Add Element at</button>
+<button (click)="addElement()">Add element</button>
+<button (click)="triggerInsertElementAnimation()">Add element at</button>
+<button (click)="triggerRemoveElementAnimation()">Remove element</button>
 <ul #array class="items">
   <li
     *ngFor="let elem of inputArray"

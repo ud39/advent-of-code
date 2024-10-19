@@ -59,10 +59,6 @@ export default class ArrayComponent implements AfterViewInit {
     this.animationEnabled = !this.animationEnabled;
   }
 
-  sleep = (delay: number = 1000) => {
-    setTimeout(() => {}, delay);
-  };
-
   triggerInsertElementAnimation(
     num: number = 0,
     delay: number = 1000,
@@ -88,8 +84,12 @@ export default class ArrayComponent implements AfterViewInit {
     setTimeout(() => {}, delay);
   }
 
-  triggerRemoveElementAnimation(delay: number = 1000, index: number = 0): void {
-    const removeElements = this.inputArray.slice(0);
+  triggerRemoveElementAnimation(
+    delay: number = 1000,
+    startIndex: number = 1,
+    endIndex: number = startIndex + 1,
+  ): void {
+    const removeElements = this.inputArray.slice(startIndex, endIndex);
     removeElements.map((elem) => {
       elem.animationState = 'start';
     });
@@ -97,6 +97,16 @@ export default class ArrayComponent implements AfterViewInit {
     setTimeout(() => {
       removeElements.map((elem) => {
         elem.animationState = 'end';
+        if (startIndex === 0) {
+          this.inputArray = this.inputArray.slice(
+            endIndex,
+            this.inputArray.length,
+          );
+        }
+        const firstHalfOfInputArray = this.inputArray.slice(0, startIndex);
+        this.inputArray = firstHalfOfInputArray.concat(
+          this.inputArray.slice(startIndex + 1, this.inputArray.length),
+        );
       });
     }, delay);
   }
