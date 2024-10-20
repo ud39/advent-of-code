@@ -431,16 +431,6 @@
                 "defaultValue": "{\n  args: {},\n}"
             },
             {
-                "name": "colorChangeAnimation",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/visual-aoc/src/animations.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "animation([\n  state('enabled', style({ color: 'red', opacity: 1 })),\n  state('disabled', style({ color: 'blue', opacity: 1 })),\n  animate('{{ time }}'),\n])"
-            },
-            {
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -745,18 +735,6 @@
                     "defaultValue": "{\n  title: 'Canvas',\n  component: CanvasComponent,\n  excludeStories: /.*Data$/,\n  tags: ['autodocs'],\n  args: {\n    ...ActionsData,\n  },\n}"
                 }
             ],
-            "projects/visual-aoc/src/animations.ts": [
-                {
-                    "name": "colorChangeAnimation",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/visual-aoc/src/animations.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "animation([\n  state('enabled', style({ color: 'red', opacity: 1 })),\n  state('disabled', style({ color: 'blue', opacity: 1 })),\n  animate('{{ time }}'),\n])"
-                }
-            ],
             "projects/visual-aoc/src/stories/Button.stories.ts": [
                 {
                     "name": "Large",
@@ -967,16 +945,6 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "preview",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/visual-aoc/src/animations.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "colorChangeAnimation",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

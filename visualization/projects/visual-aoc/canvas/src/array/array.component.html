@@ -1,5 +1,9 @@
 <button (click)="toogleAnimation()">Animate</button>
 <button (click)="triggerInsertElementAnimation()">Add element at</button>
+<form [formGroup]="form" (submit)="onSubmit($event)">
+  <label for="numberInput"></label>
+  <input type="number" formControlName="numberInput" />
+</form>
 <button (click)="triggerRemoveElementAnimation()">Remove element</button>
 <button (click)="triggerSwappingAnimation()">Swapping elements</button>
 <ul #array class="items">

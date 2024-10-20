@@ -1,5 +1,11 @@
 import { AfterViewInit, Component, ViewChild, ElementRef } from '@angular/core';
 import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
   trigger,
   transition,
   style,
@@ -21,7 +27,7 @@ type elementWithAnimationState = {
 @Component({
   selector: 'lib-array',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, ReactiveFormsModule],
   templateUrl: './array.component.html',
   styleUrls: ['./array.component.css'],
   animations: [
@@ -51,6 +57,27 @@ export default class ArrayComponent implements AfterViewInit {
     { id: crypto.randomUUID(), value: 2, animationState: 'end' },
     { id: crypto.randomUUID(), value: 1, animationState: 'end' },
   ];
+
+  form = new FormGroup({
+    numberInput: new FormControl('', [Validators.min(0)]),
+  });
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+    if (this.form.valid) {
+      const inputValue = this.form.get('numberInput')?.value;
+      console.log(inputValue);
+      this.triggerInsertElementAnimation(
+        {
+          id: crypto.randomUUID(),
+          value: Number(inputValue),
+          animationState: 'start',
+        },
+        1000,
+        2,
+      );
+    }
+  }
 
   constructor() {}
 
@@ -187,7 +214,16 @@ export default class ArrayComponent implements AfterViewInit {
     this.inputArray[secondIndex] = { ...temp };
   }
 
-  compareElemens(): void {}
+  compareElements(
+    firstElem: elementWithAnimationState,
+    secondElem: elementWithAnimationState,
+    compareFn: (
+      a: elementWithAnimationState,
+      b: elementWithAnimationState,
+    ) => boolean,
+  ): boolean {
+    return compareFn(firstElem, secondElem);
+  }
 
   addInsertElement(elem: elementWithAnimationState, index: number = 0): void {
     this.inputArray[index] = elem;
