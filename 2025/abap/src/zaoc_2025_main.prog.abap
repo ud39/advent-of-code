@@ -11,9 +11,9 @@ IF lv_file IS NOT INITIAL.
   DATA(rt_input) = zaoc_read_input=>parse_input( iv_filename = lv_file-file_path ).
 ENDIF.
 
-zaoc_2025_1=>calculate_similarity(
+zaoc_2025_2=>calc_unsafe_reports(
   EXPORTING
-    it_ids = rt_input
+    it_reports = rt_input
   RECEIVING
     rv_solution = DATA(lv_solution)
 ).
