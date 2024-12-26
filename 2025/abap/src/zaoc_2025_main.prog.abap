@@ -14,6 +14,8 @@ ENDIF.
 zaoc_2025_2=>calc_unsafe_reports(
   EXPORTING
     it_reports = rt_input
+  IMPORTING
+    et_solution = DATA(lt_solution)
   RECEIVING
     rv_solution = DATA(lv_solution)
 ).
