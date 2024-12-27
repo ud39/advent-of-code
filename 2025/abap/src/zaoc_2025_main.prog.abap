@@ -11,13 +11,11 @@ IF lv_file IS NOT INITIAL.
   DATA(rt_input) = zaoc_read_input=>parse_input( iv_filename = lv_file-file_path ).
 ENDIF.
 
-zaoc_2025_2=>calc_unsafe_reports(
+zaoc_2025_3=>get_mult_numbers(
   EXPORTING
-    it_reports = rt_input
-  IMPORTING
-    et_solution = DATA(lt_solution)
+    iv_instructions = rt_input
   RECEIVING
-    rv_solution = DATA(lv_solution)
+    rv_numbers      = DATA(lv_number)
 ).
 
-cl_demo_output=>display_text( text = lv_solution ).
+*cl_demo_output=>display_text( text = lv_solution ).
