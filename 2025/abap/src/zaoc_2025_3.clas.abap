@@ -21,10 +21,11 @@ ENDCLASS.
 
 CLASS zaoc_2025_3 IMPLEMENTATION.
   METHOD get_mult_numbers.
-    DATA(lo_matcher_mul) = cl_abap_regex=>create_pcre( pattern     = '(.|\))mul\('
+    DATA(lo_matcher_mul) = cl_abap_regex=>create_pcre( pattern     = '(.|[^\\w\\s])?mul\('
                                                        ignore_case = 'X' ).
     LOOP AT iv_instructions ASSIGNING FIELD-SYMBOL(<fs_instruction>).
-
+      " TODO: variable is assigned but never used (ABAP cleaner)
+      DATA lt_debug TYPE string_table.
       DATA(lo_match_mul) = lo_matcher_mul->create_matcher( text = <fs_instruction> ).
       WHILE lo_match_mul->find_next( ).
         DATA(lv_offset) = lo_match_mul->get_offset( ).
@@ -34,16 +35,21 @@ CLASS zaoc_2025_3 IMPLEMENTATION.
                                off  = lv_offset + 5
                                len  = strlen( <fs_instruction> ) - lv_offset - 5
                                pcre = '\(' ).
+
+        DATA(lv_opening) = find( val  = <fs_instruction>
+                                 off  = lv_offset + 1
+                                 pcre = '\(' ).
         DATA(lv_closing) = find( val  = <fs_instruction>
                                  off  = lv_offset + 1
                                  pcre = '\)' ).
         IF lv_closing > lv_check AND lv_check <> -1. CONTINUE. ENDIF.
 
         DATA(lv_mul) = substring( val = <fs_instruction>
-                                  off = lv_offset + 5
-                                  len = lv_closing - lv_offset - 5 ).
+                                  off = lv_opening + 1
+                                  len = lv_closing - lv_opening - 1 ).
         IF valid_mul( iv_mul = lv_mul  ) = abap_false. CONTINUE. ENDIF.
 
+        APPEND lv_mul TO lt_debug.
         SPLIT lv_mul AT ',' INTO DATA(lv_num1) DATA(lv_num2).
         IF lv_num1 IS INITIAL OR lv_num2 IS INITIAL. CONTINUE. ENDIF.
 
