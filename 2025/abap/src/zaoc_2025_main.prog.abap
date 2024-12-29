@@ -11,11 +11,6 @@ IF lv_file IS NOT INITIAL.
   DATA(rt_input) = zaoc_read_input=>parse_input( iv_filename = lv_file-file_path ).
 ENDIF.
 
-zaoc_2025_3=>get_product_of_muls(
-  EXPORTING
-    iv_instructions = rt_input
-  RECEIVING
-    rv_solution     = DATA(lv_product)
-).
+DATA(lv_product) = zaoc_2025_3=>get_product_of_muls( iv_instructions = rt_input ).
 
 cl_demo_output=>display_text( text = |{ lv_product }| ).
