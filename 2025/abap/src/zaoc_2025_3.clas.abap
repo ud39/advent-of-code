@@ -23,17 +23,19 @@ CLASS zaoc_2025_3 DEFINITION
     CLASS-METHODS valid_mul IMPORTING iv_mul           TYPE string
                             RETURNING VALUE(rv_is_mul) TYPE abap_bool.
 
-    CLASS-METHODS get_do_pos IMPORTING iv_instruction     TYPE string
-                             RETURNING VALUE(rv_position) TYPE int4.
+    CLASS-METHODS get_do_pos IMPORTING iv_instruction         TYPE string
+                             RETURNING VALUE(rt_match_do_tab) TYPE match_result_tab.
 
-    CLASS-METHODS get_dont_pos IMPORTING iv_instruction     TYPE string
-                               RETURNING VALUE(rv_position) TYPE int4.
+    CLASS-METHODS get_dont_pos IMPORTING iv_instruction           TYPE string
+                               RETURNING VALUE(rt_match_dont_tab) TYPE match_result_tab.
 
-    CLASS-METHODS switch_do_dont IMPORTING iv_do_pos TYPE int4
-                                           iv_dont_pos TYPE int4
-                                           iv_offset TYPE int4
+    CLASS-METHODS switch_do_dont IMPORTING iv_offset                TYPE int4
+                                           iv_instruction           TYPE string
+                                           iv_dont_pos              TYPE int4
+                                           iv_do_pos                TYPE int4
+                                 CHANGING  cv_current_do_match      TYPE int4 DEFAULT -1
+                                           cv_current_dont_match    TYPE int4 DEFAULT -1
                                  RETURNING VALUE(rv_should_collect) TYPE abap_bool.
-
 ENDCLASS.
 
 
@@ -102,17 +104,15 @@ CLASS zaoc_2025_3 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_dont_pos.
-    DATA(lo_matcher_dont) = cl_abap_regex=>create_pcre( pattern =  |.?don't().?|  ).
+    DATA(lo_matcher_dont) = cl_abap_regex=>create_pcre( pattern =  '(.|[^\\w\\s])?don''t\(\)(.|[^\\w\\s])?' ).
     DATA(lo_match_dont) = lo_matcher_dont->create_matcher( text = iv_instruction ).
-    IF lo_match_dont->find_next( ) IS INITIAL. RETURN. ENDIF.
-    rv_position = lo_match_dont->get_offset( ).
+    rt_match_dont_tab = lo_match_dont->find_all(  ).
   ENDMETHOD.
 
   METHOD get_do_pos.
-    DATA(lo_matcher_do) = cl_abap_regex=>create_pcre( pattern = '.?do\(\).?' ).
+    DATA(lo_matcher_do) = cl_abap_regex=>create_pcre( pattern = '(.|[^\\w\\s])?do\(\)(.|[^\\w\\s])?' ).
     DATA(lo_match_do) = lo_matcher_do->create_matcher( text = iv_instruction ).
-    IF lo_match_do->find_next( ) IS INITIAL. RETURN. ENDIF.
-    rv_position = lo_match_do->get_offset( ).
+    rt_match_do_tab = lo_match_do->find_all(  ).
   ENDMETHOD.
 
   METHOD get_mult_numbers_do_dont.
@@ -123,16 +123,17 @@ CLASS zaoc_2025_3 IMPLEMENTATION.
     LOOP AT iv_instructions ASSIGNING FIELD-SYMBOL(<fs_instruction>).
       " TODO: variable is assigned but never used (ABAP cleaner)
       DATA lt_debug TYPE string_table.
+      DATA(lv_dont) = get_dont_pos( iv_instruction = <fs_instruction>  ).
+      DATA(lv_do) = get_do_pos( iv_instruction = <fs_instruction> ).
       DATA(lo_match_mul) = lo_matcher_mul->create_matcher( text = <fs_instruction> ).
       WHILE lo_match_mul->find_next( ).
         DATA(lv_offset) = lo_match_mul->get_offset( ).
-        DATA(lv_dont) = get_dont_pos( iv_instruction = <fs_instruction>  ).
-        DATA(lv_do) = get_do_pos( iv_instruction = <fs_instruction> ).
 
         IF sy-tabix <> 1.
-          lv_collect_do_dont = switch_do_dont( iv_do_pos   = lv_do
-                                               iv_dont_pos = lv_dont
-                                               iv_offset = lv_offset ).
+          lv_collect_do_dont = switch_do_dont( EXPORTING iv_offset      = lv_offset
+                                                         iv_instruction = <fs_instruction>
+                                                         iv_dont_pos    = lv_dont[ 1 ]-offset
+                                                         iv_do_pos      = lv_do[ 1 ]-offset ).
         ENDIF.
 
         IF lv_collect_do_dont = abap_false. CONTINUE. ENDIF.
@@ -167,7 +168,14 @@ CLASS zaoc_2025_3 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD switch_do_dont.
-    rv_should_collect = COND #( WHEN iv_dont_pos < iv_do_pos AND iv_offset <= iv_do_pos THEN abap_false ELSE abap_true ).
+    rv_should_collect = COND #( WHEN iv_dont_pos <= iv_do_pos
+                                 AND iv_dont_pos <= iv_offset
+                                 AND iv_do_pos    > iv_offset
+                                THEN abap_false
+                                ELSE abap_true ).
+    IF rv_should_collect = abap_true.
+        cv_current_dont_match += 1.
+        cv_current_do_match += 1.
+    ENDIF.
   ENDMETHOD.
-
 ENDCLASS.
