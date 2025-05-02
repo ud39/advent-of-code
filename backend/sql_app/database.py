@@ -6,16 +6,26 @@ from dotenv import load_dotenv
 
 import os
 import datetime
+import platform
+
+sys = platform.system()
+
+match sys:
+    case 'Linux':
+        SQLALCHEMY_DATABASE_URL = "postgresql://ud39:DaVinci1337@localhost/advent_of_code"
+    case 'Darwin':
+        SQLALCHEMY_DATABASE_URL = "postgresql://jutiboottawong:@localhost/advent_of_code"
+        # SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{pwd}@database:5432/advent_of_code"
 
 load_dotenv()
 
 user = os.getenv("POSTGRESUSER")
 pwd = os.getenv("POSTGRESPWD")
+
+if user is None or pwd is None:
+    os.exit(0)
+
 current_year = datetime.datetime.now().year
-
-SQLALCHEMY_DATABASE_URL = "postgresql://jutiboottawong:@localhost/advent_of_code"
-#SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{pwd}@database:5432/advent_of_code"
-
 
 # TODO after deployment don't forget to remove echo
 engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
@@ -59,7 +69,7 @@ class Solution(Base):
     )
 
 
-#Base.metadata.create_all(engine, checkfirst=True)
+# Base.metadata.create_all(engine, checkfirst=True)
 Base.metadata.create_all(engine)
 Session: Session = sessionmaker(bind=engine)
 
@@ -93,7 +103,7 @@ def store_solution(solution: str, language: str, year: int, day: int):
 def get_solutions(year: int):
     with Session() as session:
         results = session.query(Solution).filter(Solution.year == year).all()
-        #solutions = [{"title": title, **solution.__dict__} for solution, title in results]
+        # solutions = [{"title": title, **solution.__dict__} for solution, title in results]
         solutions = [row for row in results]
         return solutions
 
