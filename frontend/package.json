@@ -27,8 +27,8 @@
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^18.2.7",
-    "@angular/cli": "~18.2.7",
+    "@angular-devkit/build-angular": "^19.2.19",
+    "@angular/cli": "~19.2.19",
     "@angular/compiler-cli": "^19.2.15",
     "@chromatic-com/storybook": "^4.1.2",
     "@compodoc/compodoc": "^1.1.23",
@@ -47,6 +47,6 @@
     "postcss": "^8.4.21",
     "storybook": "^10.0.2",
     "tailwindcss": "^3.2.7",
-    "typescript": "^5.4.5"
+    "typescript": "^5.8.3"
   }
 }
