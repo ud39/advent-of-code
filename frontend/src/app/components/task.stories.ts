@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/angular";
 
 import { argsToTemplate } from "@storybook/angular";
 
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 
 import TaskComponent from "./TaskComponent";
 

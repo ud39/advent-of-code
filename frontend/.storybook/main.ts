@@ -4,11 +4,10 @@ const config: StorybookConfig = {
   stories: ["../src/app/components/**/*.stories.ts"],
   addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
     "@storybook/addon-themes",
     "@storybook/themes",
     "@chromatic-com/storybook",
+    "@storybook/addon-docs"
   ],
   framework: {
     name: "@storybook/angular",
