@@ -9,9 +9,10 @@ import {
 } from "rxjs";
 
 @Component({
-  selector: "app-search",
-  templateUrl: "./search.component.html",
-  styleUrls: ["./search.component.scss"],
+    selector: "app-search",
+    templateUrl: "./search.component.html",
+    styleUrls: ["./search.component.scss"],
+    standalone: false
 })
 export class SearchComponent implements OnDestroy {
   @Output() searchTermChange: EventEmitter<string> = new EventEmitter<string>();

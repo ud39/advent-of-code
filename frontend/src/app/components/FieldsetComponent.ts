@@ -11,8 +11,9 @@ import { Tag } from "../models/tag.model";
 import TagComponent from "./TagComponent";
 
 @Component({
-  selector: "app-fieldset",
-  templateUrl: "./fieldset.component.html",
+    selector: "app-fieldset",
+    templateUrl: "./fieldset.component.html",
+    standalone: false
 })
 export default class FieldsetComponent implements AfterViewInit {
   @Output() selectedTagsOutput: EventEmitter<string[]> = new EventEmitter<

@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 @Component({
-  selector: "app-task",
-  templateUrl: "./task.component.html",
+    selector: "app-task",
+    templateUrl: "./task.component.html",
+    standalone: false
 })
 export default class TaskComponent {
   /**

@@ -10,8 +10,9 @@ import {
 import { Tag } from "../models/tag.model";
 
 @Component({
-  selector: "app-tag",
-  templateUrl: "./tag.component.html",
+    selector: "app-tag",
+    templateUrl: "./tag.component.html",
+    standalone: false
 })
 export default class TagComponent implements AfterViewInit {
   @Input() tag?: Tag;

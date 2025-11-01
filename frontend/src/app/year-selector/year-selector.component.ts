@@ -2,9 +2,10 @@ import { Component, EventEmitter, Output, OnInit } from "@angular/core";
 import { NumericRange } from "../types";
 
 @Component({
-  selector: "app-year-selector",
-  templateUrl: "./year-selector.component.html",
-  styleUrls: ["./year-selector.component.scss"],
+    selector: "app-year-selector",
+    templateUrl: "./year-selector.component.html",
+    styleUrls: ["./year-selector.component.scss"],
+    standalone: false
 })
 export class YearSelectorComponent implements OnInit {
   @Output() selectedYear: EventEmitter<NumericRange<2015, typeof recentYear>> =

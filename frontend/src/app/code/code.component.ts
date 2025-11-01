@@ -8,12 +8,11 @@ import {
 import { HighlightModule } from "ngx-highlightjs";
 
 @Component({
-  selector: "app-code",
-  templateUrl: "./code.component.html",
-  styleUrls: ["./code.component.scss"],
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, HighlightModule],
+    selector: "app-code",
+    templateUrl: "./code.component.html",
+    styleUrls: ["./code.component.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule, HighlightModule]
 })
 export class CodeComponent implements OnInit {
   @Input() code!: string;
