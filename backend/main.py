@@ -3,9 +3,9 @@ from fastapi import FastAPI, UploadFile, Form, HTTPException, Depends
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.middleware.cors import CORSMiddleware
 
-from scrap_aoc import get_data
+from .scrap_aoc import get_data
 from dotenv import load_dotenv
-from sql_app.database import store_input_data, store_language, store_solution, get_solutions, get_solutions_language, get_Inputs
+from .sql_app.database import *
 
 import os
 

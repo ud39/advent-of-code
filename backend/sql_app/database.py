@@ -16,14 +16,17 @@ match sys:
     case 'Darwin':
         SQLALCHEMY_DATABASE_URL = "postgresql://jutiboottawong:@localhost/advent_of_code"
         # SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{pwd}@database:5432/advent_of_code"
+    case 'local':
+        SQLALCHEMY_DATABASE_URL = "postgresql://ud39:DaVinci1337@localhost/advent_of_code"
 
 load_dotenv()
 
 user = os.getenv("POSTGRESUSER")
 pwd = os.getenv("POSTGRESPWD")
+env_mode = os.getenv("ENV_MODE")
 
-if user is None or pwd is None:
-    os.exit(0)
+if not env_mode  and ( user is None or pwd is None ):
+    os._exit(0)
 
 current_year = datetime.datetime.now().year
 
